@@ -31,6 +31,27 @@ export function LoginForm() {
       }
 
       if (data.session) {
+        const profileResult = await supabase.from('profiles').upsert(
+          {
+            id: data.user.id,
+            display_name: data.user.user_metadata?.display_name || data.user.user_metadata?.name || data.user.email?.split('@')[0] || 'User',
+            avatar_url: null,
+          },
+          { onConflict: 'id' }
+        )
+
+        if (profileResult.error) {
+          setError(profileResult.error.message)
+          return
+        }
+
+        // Log login event (server will read user-agent)
+        try {
+          await fetch('/api/auth/log-login', { method: 'POST' })
+        } catch (e) {
+          // ignore logging errors
+        }
+
         router.push('/dashboard')
         router.refresh()
       }
@@ -59,7 +80,7 @@ export function LoginForm() {
   return (
     <div className="mt-8 space-y-6">
       {error ? (
-        <div className="rounded-md bg-red-50 p-3 text-sm text-red-500">{error}</div>
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-700">{error}</div>
       ) : null}
 
       {/* OAuth Buttons */}
@@ -67,7 +88,7 @@ export function LoginForm() {
         <button
           type="button"
           onClick={handleGitHubLogin}
-          className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="flex w-full items-center justify-center gap-2 rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
             <path
@@ -82,17 +103,17 @@ export function LoginForm() {
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300" />
+          <div className="w-full border-t border-slate-300" />
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="bg-white px-2 text-gray-500">Hoặc</span>
+          <span className="bg-white px-2 text-slate-500">Hoặc</span>
         </div>
       </div>
 
       {/* Email/Password Form */}
       <form onSubmit={handleLogin} className="space-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+          <label htmlFor="email" className="block text-sm font-semibold text-slate-900">
             Email
           </label>
           <input
@@ -101,7 +122,7 @@ export function LoginForm() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
             placeholder="email@example.com"
           />
         </div>
@@ -116,7 +137,7 @@ export function LoginForm() {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
             placeholder="••••••••"
           />
         </div>

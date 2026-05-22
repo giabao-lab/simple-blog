@@ -52,7 +52,7 @@ export function CommentForm({ postId }: CommentFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error ? (
-        <div className="rounded-md bg-red-50 p-3 text-sm text-red-500">{error}</div>
+        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{error}</div>
       ) : null}
 
       <div>
@@ -60,19 +60,21 @@ export function CommentForm({ postId }: CommentFormProps) {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           required
-          rows={3}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+          rows={4}
+          className="w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
           placeholder="Viết bình luận của bạn..."
         />
       </div>
 
-      <button
-        type="submit"
-        disabled={loading || !content.trim()}
-        className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        {loading ? 'Đang gửi...' : 'Gửi bình luận'}
-      </button>
+      <div className="flex justify-end">
+        <button
+          type="submit"
+          disabled={loading || !content.trim()}
+          className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {loading ? 'Đang gửi...' : 'Gửi bình luận'}
+        </button>
+      </div>
     </form>
   )
 }

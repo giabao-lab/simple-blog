@@ -46,6 +46,33 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
+  // Admin routes - only allow users with role 'admin'
+  const isAdminPath = request.nextUrl.pathname.startsWith('/admin')
+  if (isAdminPath) {
+    // If no user, redirect to login
+    if (!user) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/login'
+      return NextResponse.redirect(url)
+    }
+
+    // Check role from profiles table
+    try {
+      const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+      const role = profile?.role || 'user'
+      if (role !== 'admin') {
+        // non-admins should be redirected to 403 page
+        const url = request.nextUrl.clone()
+        url.pathname = '/403'
+        return NextResponse.redirect(url)
+      }
+    } catch (e) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/'
+      return NextResponse.redirect(url)
+    }
+  }
+
   // Redirect logged-in users away from auth pages
   const authPaths = ['/login', '/register']
   const isAuthPath = authPaths.some((path) => request.nextUrl.pathname === path)

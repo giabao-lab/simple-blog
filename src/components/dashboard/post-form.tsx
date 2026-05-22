@@ -154,104 +154,125 @@ export function PostForm({ post }: PostFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow">
-      {error ? (
-        <div className="rounded-md bg-red-50 p-3 text-sm text-red-500">{error}</div>
-      ) : null}
-
-      <div>
-        <label htmlFor="title" className="block text-sm font-medium text-gray-900">
-          Tiêu đề <span className="text-red-500">*</span>
-        </label>
-        <input
-          id="title"
-          type="text"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-          required
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-          placeholder="Nhập tiêu đề bài viết"
-        />
+    <form
+      onSubmit={handleSubmit}
+      className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-xl shadow-gray-200/70"
+    >
+      <div className="border-b border-gray-200 bg-linear-to-r from-gray-50 to-white px-6 py-5 sm:px-8">
+        <div className="flex flex-col gap-2">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-blue-600">
+            {isEditing ? 'Chỉnh sửa' : 'Soạn thảo'}
+          </p>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+            {isEditing ? 'Cập nhật nội dung bài viết' : 'Tạo bài viết mới'}
+          </h2>
+          <p className="text-sm text-gray-600">
+            Viết nội dung rõ ràng, hỗ trợ Markdown và upload ảnh trực tiếp vào bài.
+          </p>
+        </div>
       </div>
 
-      <div>
-        <label htmlFor="excerpt" className="block text-sm font-medium text-gray-900">
-          Tóm tắt
-        </label>
-        <input
-          id="excerpt"
-          type="text"
-          value={excerpt}
-          onChange={(event) => setExcerpt(event.target.value)}
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-          placeholder="Mô tả ngắn về bài viết (hiển thị trong danh sách)"
-        />
-      </div>
+      <div className="space-y-6 px-6 py-6 sm:px-8">
+        {error ? (
+          <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{error}</div>
+        ) : null}
 
-      <div>
-        <label htmlFor="content" className="block text-sm font-medium text-gray-900">
-          Nội dung
-        </label>
-        <div className="mt-2 flex items-center gap-3">
+        <div className="grid gap-6">
+          <div>
+            <label htmlFor="title" className="mb-2 block text-sm font-semibold text-gray-900">
+              Tiêu đề <span className="text-red-500">*</span>
+            </label>
+            <input
+              id="title"
+              type="text"
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+              required
+              className="block w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              placeholder="Nhập tiêu đề bài viết"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="excerpt" className="mb-2 block text-sm font-semibold text-gray-900">
+              Tóm tắt
+            </label>
+            <input
+              id="excerpt"
+              type="text"
+              value={excerpt}
+              onChange={(event) => setExcerpt(event.target.value)}
+              className="block w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              placeholder="Mô tả ngắn hiển thị trên danh sách bài viết"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="content" className="mb-2 block text-sm font-semibold text-gray-900">
+              Nội dung
+            </label>
+            <div className="mb-3 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => imageInputRef.current?.click()}
+                disabled={uploadingImage}
+                className="inline-flex items-center rounded-2xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-sm transition hover:border-gray-400 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {uploadingImage ? 'Đang upload...' : 'Upload ảnh'}
+              </button>
+              <span className="text-sm text-gray-500">Ảnh sẽ được chèn vào nội dung dưới dạng Markdown</span>
+            </div>
+            <input
+              ref={imageInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageUpload}
+            />
+            <textarea
+              id="content"
+              value={content}
+              ref={contentRef}
+              onChange={(event) => setContent(event.target.value)}
+              rows={16}
+              className="block w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 font-mono text-gray-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              placeholder="Viết nội dung bài viết của bạn..."
+            />
+            <p className="mt-2 text-xs text-gray-500">Hỗ trợ Markdown</p>
+          </div>
+
+          <div>
+            <label htmlFor="status" className="mb-2 block text-sm font-semibold text-gray-900">
+              Trạng thái
+            </label>
+            <select
+              id="status"
+              value={status}
+              onChange={(event) => setStatus(event.target.value as PostStatus)}
+              className="block w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+            >
+              <option value="draft">Bản nháp</option>
+              <option value="published">Xuất bản</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <button
             type="button"
-            onClick={() => imageInputRef.current?.click()}
-            disabled={uploadingImage}
-            className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            onClick={() => router.back()}
+            className="inline-flex items-center justify-center rounded-2xl border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
           >
-            {uploadingImage ? 'Đang upload...' : 'Upload ảnh'}
+            Hủy
           </button>
-          <span className="text-xs text-gray-600">Ảnh sẽ được chèn vào nội dung dưới dạng Markdown</span>
+          <button
+            type="submit"
+            disabled={loading}
+            className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:-translate-y-0.5 hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {loading ? 'Đang lưu...' : isEditing ? 'Cập nhật' : 'Tạo bài viết'}
+          </button>
         </div>
-        <input
-          ref={imageInputRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleImageUpload}
-        />
-        <textarea
-          id="content"
-          value={content}
-          ref={contentRef}
-          onChange={(event) => setContent(event.target.value)}
-          rows={15}
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 font-mono text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-          placeholder="Viết nội dung bài viết của bạn..."
-        />
-        <p className="mt-1 text-xs text-gray-600">Hỗ trợ Markdown</p>
-      </div>
-
-      <div>
-        <label htmlFor="status" className="block text-sm font-medium text-gray-900">
-          Trạng thái
-        </label>
-        <select
-          id="status"
-          value={status}
-          onChange={(event) => setStatus(event.target.value as PostStatus)}
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-        >
-          <option value="draft">Bản nháp</option>
-          <option value="published">Xuất bản</option>
-        </select>
-      </div>
-
-      <div className="flex justify-end gap-4">
-        <button
-          type="button"
-          onClick={() => router.back()}
-          className="px-4 py-2 text-gray-900 hover:text-gray-600"
-        >
-          Hủy
-        </button>
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {loading ? 'Đang lưu...' : isEditing ? 'Cập nhật' : 'Tạo bài viết'}
-        </button>
       </div>
     </form>
   )

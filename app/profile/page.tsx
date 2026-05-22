@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { ProfileForm } from '@/components/profile/profile-form'
@@ -118,3 +119,4 @@ export default async function ProfilePage() {
       </div>
     </main>
   )
+}

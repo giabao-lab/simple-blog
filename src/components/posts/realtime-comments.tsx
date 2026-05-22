@@ -52,5 +52,9 @@ avatar_url
     }
   }, [postId, supabase])
 
-  return <CommentList comments={comments} />
+  return (
+    <div className="space-y-4">
+      <CommentList comments={comments} />
+    </div>
+  )
 }

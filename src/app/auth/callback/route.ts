@@ -8,7 +8,22 @@ export async function GET(request: NextRequest) {
 
   if (code) {
     const supabase = await createClient()
-    await supabase.auth.exchangeCodeForSession(code)
+    const { data } = await supabase.auth.exchangeCodeForSession(code)
+
+    if (data.user) {
+      await supabase.from('profiles').upsert(
+        {
+          id: data.user.id,
+          display_name:
+            data.user.user_metadata?.display_name ||
+            data.user.user_metadata?.name ||
+            data.user.email?.split('@')[0] ||
+            'User',
+          avatar_url: null,
+        },
+        { onConflict: 'id' }
+      )
+    }
   }
 
   // Redirect về dashboard sau khi đăng nhập thành công

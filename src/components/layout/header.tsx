@@ -8,8 +8,14 @@ export async function Header() {
     data: { user },
   } = await supabase.auth.getUser()
 
+  const { data: profile } = user
+    ? await supabase.from('profiles').select('role').eq('id', user.id).single()
+    : { data: null }
+
+  const isAdmin = profile?.role === 'admin'
+
   return (
-    <header className="bg-white shadow">
+    <header className="bg-white text-slate-900 shadow-sm shadow-slate-200/60">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="text-xl font-bold text-gray-900">
@@ -29,6 +35,14 @@ export async function Header() {
                 <Link href="/dashboard" className="text-gray-600 hover:text-gray-900">
                   Dashboard
                 </Link>
+                {isAdmin ? (
+                  <Link
+                    href="/admin"
+                    className="rounded-md bg-amber-500 px-4 py-2 text-white hover:bg-amber-600"
+                  >
+                    Admin
+                  </Link>
+                ) : null}
                 <form action={logout}>
                   <button type="submit" className="text-gray-600 hover:text-gray-900">
                     Đăng xuất

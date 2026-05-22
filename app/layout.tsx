@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" className="h-full">
-      <body className={`${inter.className} flex min-h-full flex-col`}>
+      <body className={`${inter.className} flex min-h-full flex-col bg-white text-slate-900 antialiased`}>
         <Header />
         {children}
       </body>
