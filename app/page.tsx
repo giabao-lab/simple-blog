@@ -83,16 +83,91 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-linear-to-b from-gray-50 to-white py-12">
-      <div className="mx-auto max-w-5xl px-4">
-        {/* Header Section */}
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900">Bài viết mới nhất</h1>
-          <p className="mt-3 text-lg text-gray-600">Khám phá những bài viết thú vị từ cộng đồng</p>
-        </div>
+    <main className="min-h-screen bg-linear-to-b from-slate-950 via-slate-900 to-slate-950">
+      {/* Hero Section - Featured Post */}
+      {posts && posts.length > 0 && (
+        <section className="relative h-screen flex items-center justify-center overflow-hidden">
+          {/* Background image with overlay */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-linear-to-r from-slate-950 via-slate-950/80 to-transparent z-10"></div>
+          </div>
 
-        {/* Search & Filter Section */}
-        <div className="mb-8 rounded-lg bg-white p-6 border border-gray-200 shadow-sm">
+          {/* Hero Content */}
+          <div className="relative z-20 mx-auto max-w-7xl px-4 w-full flex items-center gap-12">
+            <div className="flex-1 max-w-2xl">
+              {/* Category Badge */}
+              <div className="inline-flex items-center gap-2 mb-6">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-sm font-medium border border-blue-500/30">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                  Bài viết nổi bật
+                </span>
+              </div>
+
+              {/* Title */}
+              <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                {posts[0].title}
+              </h1>
+
+              {/* Excerpt */}
+              {posts[0].excerpt && (
+                <p className="text-lg text-slate-300 mb-8 leading-relaxed line-clamp-3">
+                  {posts[0].excerpt}
+                </p>
+              )}
+
+              {/* Author Info */}
+              <div className="flex items-center gap-4 mb-8">
+                {posts[0].profiles?.avatar_url && (
+                  <img
+                    src={posts[0].profiles.avatar_url}
+                    alt={posts[0].profiles.display_name || 'Author'}
+                    className="w-12 h-12 rounded-full object-cover border-2 border-slate-700"
+                  />
+                )}
+                <div>
+                  <p className="font-semibold text-white">{posts[0].profiles?.display_name || 'Ẩn danh'}</p>
+                  <p className="text-sm text-slate-400">
+                    {posts[0].published_at
+                      ? new Date(posts[0].published_at).toLocaleDateString('vi-VN')
+                      : 'Chưa xuất bản'}
+                  </p>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <Link
+                href={`/posts/${posts[0].slug}`}
+                className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+              >
+                Đọc bài viết
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+
+            {/* Hero Image */}
+            <div className="hidden lg:flex flex-1 h-96 rounded-xl overflow-hidden shadow-2xl">
+              <img
+                src="https://images.unsplash.com/photo-1516321318423-f06f70259b51?w=800&h=600&fit=crop"
+                alt="Hero"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </div>
+        </section>
+      )}
+
+      {/* Search & Filter Section */}
+      <section className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-slate-800 py-6">
+        <div className="mx-auto max-w-7xl px-4">
           <form method="get" className="flex flex-col gap-4">
             <div className="flex flex-col sm:flex-row gap-3">
               <input
@@ -100,19 +175,19 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 type="text"
                 defaultValue={searchQuery}
                 placeholder="Tìm kiếm tiêu đề hoặc nội dung..."
-                className="flex-1 rounded-md border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 rounded-lg border border-slate-700 bg-slate-800 px-4 py-2 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <input
                 name="author_name"
                 type="text"
                 defaultValue={authorName}
                 placeholder="Tên tác giả..."
-                className="flex-1 rounded-md border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 rounded-lg border border-slate-700 bg-slate-800 px-4 py-2 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <select
                 name="sort"
                 defaultValue={sortBy}
-                className="flex-1 rounded-md border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 rounded-lg border border-slate-700 bg-slate-800 px-4 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="newest">Mới nhất</option>
                 <option value="most_liked">Nổi bật nhất</option>
@@ -121,14 +196,14 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             <div className="flex gap-3">
               <button
                 type="submit"
-                className="rounded-md bg-blue-600 text-white px-4 py-2 text-sm font-medium hover:bg-blue-700 transition-colors"
+                className="rounded-lg bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 text-sm font-medium transition-colors"
               >
                 Tìm kiếm
               </button>
               {(searchQuery || authorName || authorFilter) && (
                 <a
                   href="/"
-                  className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="rounded-lg border border-slate-700 px-6 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800 transition-colors"
                 >
                   Xóa bộ lọc
                 </a>
@@ -136,148 +211,198 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             </div>
           </form>
         </div>
+      </section>
 
-        {posts && posts.length > 0 ? (
-          <>
-            <div className="grid gap-6">
-              {posts.map((post) => (
-                <article
-                  key={post.id}
-                  className="group rounded-lg border border-gray-200 bg-white p-8 shadow-md transition-all hover:shadow-lg hover:border-blue-300"
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                    <div className="flex-1">
-                      <Link href={`/posts/${post.slug}`}>
-                        <h2 className="text-2xl font-bold text-gray-900 transition-colors group-hover:text-blue-600">
-                          {post.title}
-                        </h2>
-                      </Link>
+      {/* Posts Grid Section */}
+      <section className="py-20">
+        <div className="mx-auto max-w-7xl px-4">
+          {/* Section Title */}
+          {!searchQuery && !authorName && !authorFilter && (
+            <div className="mb-16">
+              <h2 className="text-4xl font-bold text-white mb-4">Bài viết khác</h2>
+              <p className="text-slate-400">Khám phá những bài viết thú vị từ cộng đồng</p>
+            </div>
+          )}
 
-                      {post.excerpt ? (
-                        <p className="mt-3 text-gray-700 leading-relaxed line-clamp-2">{post.excerpt}</p>
-                      ) : null}
+          {posts && posts.length > 0 ? (
+            <>
+              {/* Skip first post if we're showing it in hero */}
+              {!searchQuery && !authorName && !authorFilter && posts.length > 1 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {posts.slice(1).map((post) => (
+                    <article
+                      key={post.id}
+                      className="group rounded-xl border border-slate-800 bg-slate-800/50 backdrop-blur overflow-hidden hover:border-slate-700 transition-all hover:shadow-xl hover:shadow-blue-500/10"
+                    >
+                      {/* Post Image Placeholder */}
+                      <div className="aspect-video bg-linear-to-br from-slate-700 to-slate-900 flex items-center justify-center overflow-hidden">
+                        <div className="text-4xl group-hover:scale-110 transition-transform">🎨</div>
+                      </div>
 
-                      <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                        <div className="flex items-center gap-2">
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                          </svg>
-                          <span>{post.profiles?.display_name || 'Ẩn danh'}</span>
-                        </div>
-                        <span className="text-gray-300">•</span>
-                        <div className="flex items-center gap-2">
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h2A2.75 2.75 0 0119 6.75v10.5A2.75 2.75 0 0116.25 20H3.75A2.75 2.75 0 011 17.25V6.75C1 5.232 2.232 4 3.75 4h2V2.75A.75.75 0 015.75 2z" clipRule="evenodd" />
-                          </svg>
-                          <span>
+                      {/* Post Content */}
+                      <div className="p-6">
+                        <Link href={`/posts/${post.slug}`}>
+                          <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-2 mb-3">
+                            {post.title}
+                          </h3>
+                        </Link>
+
+                        {post.excerpt && (
+                          <p className="text-slate-400 text-sm mb-4 line-clamp-2">{post.excerpt}</p>
+                        )}
+
+                        {/* Meta Info */}
+                        <div className="flex items-center justify-between pt-4 border-t border-slate-700">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-slate-400">
+                              {post.profiles?.display_name || 'Ẩn danh'}
+                            </span>
+                          </div>
+                          <span className="text-xs text-slate-500">
                             {post.published_at
                               ? new Date(post.published_at).toLocaleDateString('vi-VN')
                               : 'Chưa xuất bản'}
                           </span>
                         </div>
                       </div>
-                    </div>
-
-                    <Link
-                      href={`/posts/${post.slug}`}
-                      className="inline-flex items-center justify-center px-4 py-2 rounded-md bg-blue-50 text-blue-600 font-medium hover:bg-blue-100 transition-colors whitespace-nowrap"
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {posts.map((post) => (
+                    <article
+                      key={post.id}
+                      className="group rounded-xl border border-slate-800 bg-slate-800/50 backdrop-blur overflow-hidden hover:border-slate-700 transition-all hover:shadow-xl hover:shadow-blue-500/10"
                     >
-                      Đọc tiếp
-                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      {/* Post Image Placeholder */}
+                      <div className="aspect-video bg-linear-to-br from-slate-700 to-slate-900 flex items-center justify-center overflow-hidden">
+                        <div className="text-4xl group-hover:scale-110 transition-transform">🎨</div>
+                      </div>
+
+                      {/* Post Content */}
+                      <div className="p-6">
+                        <Link href={`/posts/${post.slug}`}>
+                          <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-2 mb-3">
+                            {post.title}
+                          </h3>
+                        </Link>
+
+                        {post.excerpt && (
+                          <p className="text-slate-400 text-sm mb-4 line-clamp-2">{post.excerpt}</p>
+                        )}
+
+                        {/* Meta Info */}
+                        <div className="flex items-center justify-between pt-4 border-t border-slate-700">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-slate-400">
+                              {post.profiles?.display_name || 'Ẩn danh'}
+                            </span>
+                          </div>
+                          <span className="text-xs text-slate-500">
+                            {post.published_at
+                              ? new Date(post.published_at).toLocaleDateString('vi-VN')
+                              : 'Chưa xuất bản'}
+                          </span>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              )}
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <nav className="mt-16 flex items-center justify-center gap-4">
+                  {currentPage > 1 ? (
+                    <Link
+                      href={
+                        searchQuery || authorName || authorFilter || sortBy !== 'newest'
+                          ? `/?${new URLSearchParams({
+                              ...(searchQuery && { q: searchQuery }),
+                              ...(authorName && { author_name: authorName }),
+                              ...(authorFilter && { author_id: authorFilter }),
+                              ...(sortBy !== 'newest' && { sort: sortBy }),
+                              page: String(currentPage - 1),
+                            }).toString()}`
+                          : currentPage - 1 === 1
+                            ? '/'
+                            : `/?page=${currentPage - 1}`
+                      }
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-100 text-sm font-medium transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                      Trang trước
+                    </Link>
+                  ) : (
+                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 bg-slate-800/50 text-slate-500 text-sm font-medium cursor-not-allowed">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                      Trang trước
+                    </span>
+                  )}
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-slate-400">
+                      Trang <span className="font-bold text-slate-100">{currentPage}</span> /{' '}
+                      <span className="font-bold text-slate-100">{totalPages}</span>
+                    </span>
+                  </div>
+
+                  {currentPage < totalPages ? (
+                    <Link
+                      href={
+                        searchQuery || authorName || authorFilter || sortBy !== 'newest'
+                          ? `/?${new URLSearchParams({
+                              ...(searchQuery && { q: searchQuery }),
+                              ...(authorName && { author_name: authorName }),
+                              ...(authorFilter && { author_id: authorFilter }),
+                              ...(sortBy !== 'newest' && { sort: sortBy }),
+                              page: String(currentPage + 1),
+                            }).toString()}`
+                          : `/?page=${currentPage + 1}`
+                      }
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-100 text-sm font-medium transition-colors"
+                    >
+                      Trang sau
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </Link>
-                  </div>
-                </article>
-              ))}
+                  ) : (
+                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 bg-slate-800/50 text-slate-500 text-sm font-medium cursor-not-allowed">
+                      Trang sau
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                  )}
+                </nav>
+              )}
+            </>
+          ) : (
+            <div className="rounded-xl border border-slate-800 bg-slate-800/50 py-16 text-center">
+              <svg className="mx-auto h-12 w-12 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4" />
+              </svg>
+              <p className="mt-4 text-lg text-slate-300">
+                {searchQuery || authorName || authorFilter ? 'Không tìm thấy bài viết nào' : 'Chưa có bài viết nào'}
+              </p>
+              <p className="mt-1 text-sm text-slate-400">Hãy quay lại sau nhé!</p>
+              {(searchQuery || authorName || authorFilter) && (
+                <div className="mt-4">
+                  <a href="/" className="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                    Xóa bộ lọc và xem tất cả
+                  </a>
+                </div>
+              )}
             </div>
-
-            {/* Pagination */}
-            <nav className="mt-12 flex items-center justify-between">
-              {currentPage > 1 ? (
-                <Link
-                  href={
-                    searchQuery || authorName || authorFilter || sortBy !== 'newest'
-                      ? `/?${new URLSearchParams({
-                          ...(searchQuery && { q: searchQuery }),
-                          ...(authorName && { author_name: authorName }),
-                          ...(authorFilter && { author_id: authorFilter }),
-                          ...(sortBy !== 'newest' && { sort: sortBy }),
-                          page: String(currentPage - 1),
-                        }).toString()}`
-                      : currentPage - 1 === 1
-                        ? '/'
-                        : `/?page=${currentPage - 1}`
-                  }
-                  className="inline-flex items-center px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-                >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                  Trang trước
-                </Link>
-              ) : (
-                <span className="inline-flex items-center px-4 py-2 rounded-lg border border-gray-200 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed">
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                  Trang trước
-                </span>
-              )}
-
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600">
-                  Trang <span className="font-bold text-gray-900">{currentPage}</span> / <span className="font-bold text-gray-900">{totalPages}</span>
-                </span>
-              </div>
-
-              {currentPage < totalPages ? (
-                <Link
-                  href={
-                    searchQuery || authorName || authorFilter || sortBy !== 'newest'
-                      ? `/?${new URLSearchParams({
-                          ...(searchQuery && { q: searchQuery }),
-                          ...(authorName && { author_name: authorName }),
-                          ...(authorFilter && { author_id: authorFilter }),
-                          ...(sortBy !== 'newest' && { sort: sortBy }),
-                          page: String(currentPage + 1),
-                        }).toString()}`
-                      : `/?page=${currentPage + 1}`
-                  }
-                  className="inline-flex items-center px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-                >
-                  Trang sau
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              ) : (
-                <span className="inline-flex items-center px-4 py-2 rounded-lg border border-gray-200 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed">
-                  Trang sau
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </span>
-              )}
-            </nav>
-          </>
-        ) : (
-          <div className="rounded-lg border border-gray-200 bg-white py-16 text-center shadow-md">
-            <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4" />
-            </svg>
-            <p className="mt-4 text-lg text-gray-600">{searchQuery || authorName || authorFilter ? 'Không tìm thấy bài viết nào' : 'Chưa có bài viết nào'}</p>
-            <p className="mt-1 text-sm text-gray-500">Hãy quay lại sau nhé!</p>
-            {(searchQuery || authorName || authorFilter) && (
-              <div className="mt-4">
-                <a href="/" className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-                  Xóa bộ lọc và xem tất cả
-                </a>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      </section>
     </main>
   )
 }
