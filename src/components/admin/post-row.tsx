@@ -20,11 +20,11 @@ export default function PostRow({ post }: { post: any }) {
   return (
     <div className="flex items-center justify-between gap-4 py-2">
       <div>
-        <div className="font-semibold">{post.title}</div>
-        <div className="text-sm text-gray-500">{post.slug} • {post.status}</div>
+        <div className="font-semibold text-slate-100">{post.title}</div>
+        <div className="text-sm text-slate-400">{post.slug} • {post.status}</div>
       </div>
       <div className="flex items-center gap-2">
-        <button onClick={deletePost} disabled={loading} className="rounded-md bg-red-600 px-3 py-1 text-white">
+        <button onClick={deletePost} disabled={loading} className="rounded-md bg-red-600 px-3 py-1 text-white hover:bg-red-700 disabled:opacity-50">
           Delete
         </button>
       </div>

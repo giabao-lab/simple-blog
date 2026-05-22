@@ -35,26 +35,26 @@ export default function UserRow({ user }: { user: any }) {
   return (
     <div className="flex items-center justify-between gap-4 py-2">
       <div>
-        <div className="font-semibold">{user.display_name || 'Không có tên'}</div>
-        <div className="text-sm text-gray-500">{user.id}</div>
+        <div className="font-semibold text-slate-100">{user.display_name || 'Không có tên'}</div>
+        <div className="text-sm text-slate-400">{user.id}</div>
       </div>
       <div className="flex items-center gap-2">
-        <div className="rounded-full px-3 py-1 text-sm bg-gray-100">{user.role}</div>
+        <div className="rounded-full px-3 py-1 text-sm bg-slate-700 text-slate-200">{user.role}</div>
         {user.role !== 'admin' ? (
-          <button disabled={loading} onClick={() => changeRole('admin')} className="rounded-md bg-blue-600 px-3 py-1 text-white">
+          <button disabled={loading} onClick={() => changeRole('admin')} className="rounded-md bg-blue-600 px-3 py-1 text-white hover:bg-blue-700 disabled:opacity-50">
             Make Admin
           </button>
         ) : (
-          <button disabled={loading} onClick={() => changeRole('user')} className="rounded-md bg-gray-200 px-3 py-1">
+          <button disabled={loading} onClick={() => changeRole('user')} className="rounded-md bg-slate-700 px-3 py-1 text-slate-100 hover:bg-slate-600 disabled:opacity-50">
             Revoke
           </button>
         )}
         {user.is_banned ? (
-          <button disabled={loading} onClick={() => setBan(false)} className="rounded-md bg-green-600 px-3 py-1 text-white">
+          <button disabled={loading} onClick={() => setBan(false)} className="rounded-md bg-green-600 px-3 py-1 text-white hover:bg-green-700 disabled:opacity-50">
             Unban
           </button>
         ) : (
-          <button disabled={loading} onClick={() => setBan(true)} className="rounded-md bg-red-600 px-3 py-1 text-white">
+          <button disabled={loading} onClick={() => setBan(true)} className="rounded-md bg-red-600 px-3 py-1 text-white hover:bg-red-700 disabled:opacity-50">
             Ban
           </button>
         )}
