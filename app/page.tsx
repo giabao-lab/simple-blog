@@ -149,8 +149,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             {/* Hero Image */}
             <div className="hidden lg:flex flex-1 h-96 rounded-xl overflow-hidden shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1516321318423-f06f70259b51?w=800&h=600&fit=crop"
-                alt="Hero"
+                src={posts[0].featured_image_url || 'https://images.unsplash.com/photo-1516321318423-f06f70259b51?w=800&h=600&fit=crop'}
+                alt={posts[0].title}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -234,9 +234,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                       key={post.id}
                       className="group rounded-xl border border-slate-800 bg-slate-800/50 backdrop-blur overflow-hidden hover:border-slate-700 transition-all hover:shadow-xl hover:shadow-blue-500/10"
                     >
-                      {/* Post Image Placeholder */}
+                      {/* Post Image */}
                       <div className="aspect-video bg-linear-to-br from-slate-700 to-slate-900 flex items-center justify-center overflow-hidden">
-                        <div className="text-4xl group-hover:scale-110 transition-transform">🎨</div>
+                        {post.featured_image_url ? (
+                          <img src={post.featured_image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                        ) : (
+                          <div className="text-4xl group-hover:scale-110 transition-transform">🎨</div>
+                        )}
                       </div>
 
                       {/* Post Content */}
@@ -275,9 +279,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                       key={post.id}
                       className="group rounded-xl border border-slate-800 bg-slate-800/50 backdrop-blur overflow-hidden hover:border-slate-700 transition-all hover:shadow-xl hover:shadow-blue-500/10"
                     >
-                      {/* Post Image Placeholder */}
+                      {/* Post Image */}
                       <div className="aspect-video bg-linear-to-br from-slate-700 to-slate-900 flex items-center justify-center overflow-hidden">
-                        <div className="text-4xl group-hover:scale-110 transition-transform">🎨</div>
+                        {post.featured_image_url ? (
+                          <img src={post.featured_image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                        ) : (
+                          <div className="text-4xl group-hover:scale-110 transition-transform">🎨</div>
+                        )}
                       </div>
 
                       {/* Post Content */}

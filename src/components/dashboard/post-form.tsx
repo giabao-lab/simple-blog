@@ -20,9 +20,11 @@ export function PostForm({ post }: PostFormProps) {
   const [content, setContent] = useState(post?.content || '')
   const [excerpt, setExcerpt] = useState(post?.excerpt || '')
   const [status, setStatus] = useState<PostStatus>(post?.status || 'draft')
+  const [featuredImageUrl, setFeaturedImageUrl] = useState(post?.featured_image_url || '')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [uploadingImage, setUploadingImage] = useState(false)
+  const [uploadingFeaturedImage, setUploadingFeaturedImage] = useState(false)
 
   const insertAtCursor = (textToInsert: string) => {
     const textarea = contentRef.current
@@ -94,6 +96,54 @@ export function PostForm({ post }: PostFormProps) {
     }
   }
 
+  const handleFeaturedImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+
+    if (!file) {
+      return
+    }
+
+    if (!file.type.startsWith('image/')) {
+      setError('Vui lòng chọn file ảnh hợp lệ')
+      event.target.value = ''
+      return
+    }
+
+    setError(null)
+    setUploadingFeaturedImage(true)
+
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+
+      if (!user) {
+        setError('Bạn cần đăng nhập để upload ảnh')
+        return
+      }
+
+      const fileExtension = file.name.split('.').pop() || 'png'
+      const filePath = `featured/${user.id}/${crypto.randomUUID()}.${fileExtension}`
+
+      const { error: uploadError } = await supabase.storage.from('post-images').upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false,
+        contentType: file.type,
+      })
+
+      if (uploadError) throw uploadError
+
+      const { data } = supabase.storage.from('post-images').getPublicUrl(filePath)
+      setFeaturedImageUrl(data.publicUrl)
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Upload ảnh thất bại'
+      setError(errorMessage)
+    } finally {
+      setUploadingFeaturedImage(false)
+      event.target.value = ''
+    }
+  }
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     setError(null)
@@ -126,6 +176,7 @@ export function PostForm({ post }: PostFormProps) {
         status,
         author_id: user.id,
         published_at: status === 'published' ? new Date().toISOString() : null,
+        featured_image_url: featuredImageUrl || null,
       }
 
       if (isEditing) {
@@ -205,6 +256,37 @@ export function PostForm({ post }: PostFormProps) {
               className="block w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
               placeholder="Mô tả ngắn hiển thị trên danh sách bài viết"
             />
+          </div>
+
+          <div>
+            <label htmlFor="featured-image" className="mb-2 block text-sm font-semibold text-gray-900">
+              Ảnh bìa
+            </label>
+            <div className="flex flex-col gap-3">
+              {featuredImageUrl && (
+                <div className="relative overflow-hidden rounded-2xl border border-gray-300">
+                  <img src={featuredImageUrl} alt="Featured" className="h-48 w-full object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => setFeaturedImageUrl('')}
+                    className="absolute right-2 top-2 rounded-full bg-red-500 p-1 text-white hover:bg-red-600"
+                  >
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              )}
+              <input
+                id="featured-image"
+                type="file"
+                accept="image/*"
+                onChange={handleFeaturedImageUpload}
+                disabled={uploadingFeaturedImage}
+                className="block w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 file:mr-4 file:rounded-lg file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-blue-600 file:font-semibold hover:file:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-50"
+              />
+              <p className="text-xs text-gray-500">Ảnh bìa sẽ hiển thị trên hero section và danh sách bài viết</p>
+            </div>
           </div>
 
           <div>
