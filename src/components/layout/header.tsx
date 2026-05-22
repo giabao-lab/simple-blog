@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { logout } from '@/app/actions/auth'
+import { NotificationBell } from './notification-bell'
 
 export async function Header() {
   const supabase = await createClient()
@@ -9,7 +10,7 @@ export async function Header() {
   } = await supabase.auth.getUser()
 
   const { data: profile } = user
-    ? await supabase.from('profiles').select('role').eq('id', user.id).single()
+    ? await supabase.from('profiles').select('role, display_name').eq('id', user.id).single()
     : { data: null }
 
   const isAdmin = profile?.role === 'admin'
@@ -29,8 +30,9 @@ export async function Header() {
 
             {user ? (
               <>
-                <Link href="/profile" className="text-slate-300 hover:text-white transition-colors">
-                  Profile
+                <NotificationBell />
+                <Link href="/profile" className="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                  <span>{profile?.display_name || 'Hồ sơ'}</span>
                 </Link>
                 <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors">
                   Dashboard

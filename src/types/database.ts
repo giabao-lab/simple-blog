@@ -68,6 +68,20 @@ export interface Like {
   created_at: string
 }
 
+// Notification
+export interface Notification {
+  id: string
+  user_id: string
+  type: 'like' | 'comment'
+  post_id: string
+  trigger_user_id: string
+  is_read: boolean
+  created_at: string
+  updated_at: string
+  // Joined data
+  profiles?: Profile
+}
+
 // API Response Types
 export interface ApiResponse<T> {
   data: T | null
