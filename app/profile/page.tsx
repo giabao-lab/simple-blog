@@ -21,18 +21,18 @@ export default async function ProfilePage() {
     .single()
 
   return (
-    <main className="min-h-screen bg-linear-to-b from-gray-50 to-white py-12">
+    <main className="min-h-screen bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="mx-auto max-w-5xl px-4">
         {/* Header Section */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900">Thông tin cá nhân</h1>
-          <p className="mt-3 text-lg text-gray-600">Quản lý và chỉnh sửa thông tin profile của bạn</p>
+          <h1 className="text-4xl font-bold tracking-tight text-white">Thông tin cá nhân</h1>
+          <p className="mt-3 text-lg text-slate-400">Quản lý và chỉnh sửa thông tin profile của bạn</p>
         </div>
 
         {/* Main Content Card */}
-        <div className="rounded-lg border border-gray-200 bg-white shadow-md overflow-hidden">
+        <div className="rounded-lg border border-slate-800 bg-slate-900/50 backdrop-blur shadow-xl shadow-blue-500/10 overflow-hidden">
           {/* Profile Header with Avatar Background */}
-          <div className="h-32 bg-linear-to-r from-blue-500 to-blue-600"></div>
+          <div className="h-32 bg-linear-to-r from-blue-600 to-blue-700"></div>
 
           {/* Profile Content */}
           <div className="px-8 pb-8">
@@ -44,10 +44,10 @@ export default async function ProfilePage() {
                   <img
                     src={profile.avatar_url}
                     alt="Avatar"
-                    className="h-32 w-32 rounded-lg border-4 border-white shadow-lg object-cover bg-gray-100"
+                    className="h-32 w-32 rounded-lg border-4 border-slate-900 shadow-lg object-cover bg-slate-800"
                   />
                 ) : (
-                  <div className="h-32 w-32 rounded-lg border-4 border-white shadow-lg bg-gray-300 flex items-center justify-center">
+                  <div className="h-32 w-32 rounded-lg border-4 border-slate-900 shadow-lg bg-slate-800 flex items-center justify-center">
                     <svg className="w-16 h-16 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                     </svg>

@@ -80,7 +80,7 @@ export function LoginForm() {
   return (
     <div className="mt-8 space-y-6">
       {error ? (
-        <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-700">{error}</div>
+        <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm font-medium text-red-400">{error}</div>
       ) : null}
 
       {/* OAuth Buttons */}
@@ -88,7 +88,7 @@ export function LoginForm() {
         <button
           type="button"
           onClick={handleGitHubLogin}
-          className="flex w-full items-center justify-center gap-2 rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 px-4 py-2 text-sm font-semibold text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-colors"
         >
           <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
             <path
@@ -103,17 +103,17 @@ export function LoginForm() {
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-slate-300" />
+          <div className="w-full border-t border-slate-700" />
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="bg-white px-2 text-slate-500">Hoặc</span>
+          <span className="bg-slate-900/50 px-2 text-slate-400">Hoặc</span>
         </div>
       </div>
 
       {/* Email/Password Form */}
       <form onSubmit={handleLogin} className="space-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm font-semibold text-slate-900">
+          <label htmlFor="email" className="block text-sm font-semibold text-slate-200">
             Email
           </label>
           <input
@@ -122,13 +122,13 @@ export function LoginForm() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
-            className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+            className="mt-1 block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-slate-100 shadow-sm placeholder:text-slate-500 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
             placeholder="email@example.com"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-900">
+          <label htmlFor="password" className="block text-sm font-medium text-slate-200">
             Mật khẩu
           </label>
           <input
@@ -137,7 +137,7 @@ export function LoginForm() {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
-            className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+            className="mt-1 block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-slate-100 shadow-sm placeholder:text-slate-500 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
             placeholder="••••••••"
           />
         </div>
@@ -145,21 +145,21 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex w-full justify-center rounded-lg border border-transparent bg-blue-600 hover:bg-blue-700 px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
         >
           {loading ? 'Đang xử lý...' : 'Đăng nhập'}
         </button>
       </form>
 
-      <p className="text-center text-sm text-gray-600">
+      <p className="text-center text-sm text-slate-400">
         Chưa có tài khoản?{' '}
-        <Link href="/register" className="text-blue-600 hover:text-blue-500">
+        <Link href="/register" className="text-blue-400 hover:text-blue-300 transition-colors">
           Đăng ký ngay
         </Link>
       </p>
 
       <p className="text-center text-sm">
-        <Link href="/forgot-password" className="text-blue-600 hover:text-blue-500">
+        <Link href="/forgot-password" className="text-blue-400 hover:text-blue-300 transition-colors">
           Quên mật khẩu?
         </Link>
       </p>
