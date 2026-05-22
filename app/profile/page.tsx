@@ -25,8 +25,8 @@ export default async function ProfilePage() {
       <div className="mx-auto max-w-5xl px-4">
         {/* Header Section */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold tracking-tight text-white">Thông tin cá nhân</h1>
-          <p className="mt-3 text-lg text-slate-400">Quản lý và chỉnh sửa thông tin profile của bạn</p>
+          <h1 className="text-4xl font-bold tracking-tight text-slate-100">Thông tin cá nhân</h1>
+          <p className="mt-3 text-lg text-slate-300">Quản lý và chỉnh sửa thông tin profile của bạn</p>
         </div>
 
         {/* Main Content Card */}
@@ -56,17 +56,17 @@ export default async function ProfilePage() {
               </div>
 
               <div className="flex-1">
-                <h2 className="text-2xl font-bold text-gray-900">{profile?.display_name || 'Người dùng ẩn danh'}</h2>
-                <p className="mt-1 text-sm text-gray-500">Email: {user.email}</p>
-                <p className="mt-1 text-sm text-gray-500">ID: {user.id}</p>
+                <h2 className="text-2xl font-bold text-slate-100">{profile?.display_name || 'Người dùng ẩn danh'}</h2>
+                <p className="mt-1 text-sm text-slate-400">Email: {user.email}</p>
+                <p className="mt-1 text-sm text-slate-400">ID: {user.id}</p>
               </div>
             </div>
 
-            <hr className="my-8 border-gray-200" />
+            <hr className="my-8 border-slate-700" />
 
             {/* Form Section */}
             <div className="max-w-2xl">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6">Chỉnh sửa thông tin</h3>
+              <h3 className="text-lg font-semibold text-slate-100 mb-6">Chỉnh sửa thông tin</h3>
               <ProfileForm
                 userId={user.id}
                 initialDisplayName={profile?.display_name ?? null}
@@ -79,17 +79,17 @@ export default async function ProfilePage() {
         {/* Additional Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           {/* Account Security Card */}
-          <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md">
+          <div className="rounded-lg border border-slate-700 bg-slate-800/50 p-6 shadow-md">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-blue-50 rounded-lg">
-                <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <div className="p-2 bg-blue-900/30 rounded-lg">
+                <svg className="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Bảo mật tài khoản</h3>
+              <h3 className="text-lg font-semibold text-slate-100">Bảo mật tài khoản</h3>
             </div>
-            <p className="text-sm text-gray-600 mb-4">Đổi mật khẩu hoặc quản lý phiên đăng nhập của bạn</p>
-            <Link href="/forgot-password" className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm">
+            <p className="text-sm text-slate-400 mb-4">Đổi mật khẩu hoặc quản lý phiên đăng nhập của bạn</p>
+            <Link href="/forgot-password" className="inline-flex items-center text-blue-400 hover:text-blue-300 font-medium text-sm">
               Quản lý bảo mật
               <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -98,17 +98,17 @@ export default async function ProfilePage() {
           </div>
 
           {/* Activity Card */}
-          <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md">
+          <div className="rounded-lg border border-slate-700 bg-slate-800/50 p-6 shadow-md">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-green-50 rounded-lg">
-                <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <div className="p-2 bg-green-900/30 rounded-lg">
+                <svg className="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Hoạt động</h3>
+              <h3 className="text-lg font-semibold text-slate-100">Hoạt động</h3>
             </div>
-            <p className="text-sm text-gray-600 mb-4">Xem lịch sử đăng nhập và hoạt động của bạn</p>
-            <Link href="/dashboard" className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm">
+            <p className="text-sm text-slate-400 mb-4">Xem lịch sử đăng nhập và hoạt động của bạn</p>
+            <Link href="/dashboard" className="inline-flex items-center text-blue-400 hover:text-blue-300 font-medium text-sm">
               Xem bài viết của tôi
               <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
