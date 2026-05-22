@@ -20,6 +20,7 @@ export interface Post {
   content: string | null
   excerpt: string | null
   cover_image_url: string | null
+  featured_image_url: string | null
   status: PostStatus
   created_at: string
   updated_at: string

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { Post } from '@/types/database'
 
 const PAGE_SIZE = 3
 
@@ -229,7 +230,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               {/* Skip first post if we're showing it in hero */}
               {!searchQuery && !authorName && !authorFilter && posts.length > 1 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {posts.slice(1).map((post) => (
+                  {posts.slice(1).map((post: Post) => (
                     <article
                       key={post.id}
                       className="group rounded-xl border border-slate-800 bg-slate-800/50 backdrop-blur overflow-hidden hover:border-slate-700 transition-all hover:shadow-xl hover:shadow-blue-500/10"
@@ -274,7 +275,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {posts.map((post) => (
+                  {posts.map((post: Post) => (
                     <article
                       key={post.id}
                       className="group rounded-xl border border-slate-800 bg-slate-800/50 backdrop-blur overflow-hidden hover:border-slate-700 transition-all hover:shadow-xl hover:shadow-blue-500/10"

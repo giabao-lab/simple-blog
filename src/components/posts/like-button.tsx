@@ -59,14 +59,14 @@ export function LikeButton({ postId, initialLikeCount, initialIsLiked }: LikeBut
         type="button"
         onClick={toggleLike}
         disabled={loading}
-        className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition disabled:cursor-not-allowed disabled:opacity-50 ${
-          isLiked ? 'bg-pink-600 shadow-pink-600/25 hover:bg-pink-700' : 'bg-blue-600 hover:-translate-y-0.5 hover:bg-blue-700'
+        className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold text-white shadow-lg transition disabled:cursor-not-allowed disabled:opacity-50 ${
+          isLiked ? 'bg-pink-600 shadow-pink-600/25 hover:bg-pink-700' : 'bg-blue-600 shadow-blue-600/25 hover:-translate-y-0.5 hover:bg-blue-700'
         }`}
       >
         {loading ? 'Đang xử lý...' : isLiked ? 'Unlike' : 'Like'}
       </button>
-      <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700">{likeCount} lượt thích</span>
-      {error ? <span className="text-sm text-red-600">{error}</span> : null}
+      <span className="rounded-full bg-slate-700/30 border border-slate-700 px-3 py-1 text-sm font-medium text-slate-300">{likeCount} lượt thích</span>
+      {error ? <span className="text-sm text-red-400">{error}</span> : null}
     </div>
   )
 }

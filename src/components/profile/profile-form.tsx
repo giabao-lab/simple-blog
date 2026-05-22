@@ -46,34 +46,34 @@ export function ProfileForm({ userId, initialDisplayName, initialAvatarUrl }: Pr
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 rounded-lg bg-white p-6 shadow">
-      {error ? <div className="rounded-md bg-red-50 p-3 text-sm text-red-600">{error}</div> : null}
+    <form onSubmit={handleSubmit} className="space-y-6 rounded-lg bg-slate-800 border border-slate-700 p-6 shadow">
+      {error ? <div className="rounded-md bg-red-900/20 border border-red-700 p-3 text-sm text-red-300">{error}</div> : null}
       {success ? (
-        <div className="rounded-md bg-green-50 p-3 text-sm text-green-700">{success}</div>
+        <div className="rounded-md bg-green-900/20 border border-green-700 p-3 text-sm text-green-300">{success}</div>
       ) : null}
 
       <div>
-        <label htmlFor="displayName" className="block text-sm font-medium text-gray-900">
+        <label htmlFor="displayName" className="block text-sm font-medium text-slate-100">
           Tên hiển thị
         </label>
         <input
           id="displayName"
           value={displayName}
           onChange={(event) => setDisplayName(event.target.value)}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+          className="mt-1 w-full rounded-md border border-slate-700 bg-slate-700/30 px-3 py-2 text-slate-100 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-900/20 placeholder:text-slate-500"
           placeholder="Nhập tên hiển thị"
         />
       </div>
 
       <div>
-        <label htmlFor="avatarUrl" className="block text-sm font-medium text-gray-900">
+        <label htmlFor="avatarUrl" className="block text-sm font-medium text-slate-100">
           Avatar URL
         </label>
         <input
           id="avatarUrl"
           value={avatarUrl}
           onChange={(event) => setAvatarUrl(event.target.value)}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+          className="mt-1 w-full rounded-md border border-slate-700 bg-slate-700/30 px-3 py-2 text-slate-100 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-900/20 placeholder:text-slate-500"
           placeholder="https://..."
         />
       </div>

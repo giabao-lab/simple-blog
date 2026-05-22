@@ -52,7 +52,7 @@ export function CommentForm({ postId }: CommentFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error ? (
-        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{error}</div>
+        <div className="rounded-2xl border border-red-700 bg-red-900/20 px-4 py-3 text-sm text-red-300">{error}</div>
       ) : null}
 
       <div>
@@ -61,7 +61,7 @@ export function CommentForm({ postId }: CommentFormProps) {
           onChange={(e) => setContent(e.target.value)}
           required
           rows={4}
-          className="w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+          className="w-full rounded-2xl border border-slate-700 bg-slate-700/30 px-4 py-3 text-slate-100 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-900/20 placeholder:text-slate-500"
           placeholder="Viết bình luận của bạn..."
         />
       </div>

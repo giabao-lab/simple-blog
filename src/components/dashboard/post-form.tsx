@@ -207,17 +207,17 @@ export function PostForm({ post }: PostFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-xl shadow-gray-200/70"
+      className="overflow-hidden rounded-3xl border border-slate-700 bg-slate-800 shadow-xl shadow-slate-900/60"
     >
-      <div className="border-b border-gray-200 bg-linear-to-r from-gray-50 to-white px-6 py-5 sm:px-8">
+      <div className="border-b border-slate-700 bg-linear-to-r from-slate-800 to-slate-700 px-6 py-5 sm:px-8">
         <div className="flex flex-col gap-2">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-blue-600">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-blue-400">
             {isEditing ? 'Chỉnh sửa' : 'Soạn thảo'}
           </p>
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-100">
             {isEditing ? 'Cập nhật nội dung bài viết' : 'Tạo bài viết mới'}
           </h2>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-slate-300">
             Viết nội dung rõ ràng, hỗ trợ Markdown và upload ảnh trực tiếp vào bài.
           </p>
         </div>
@@ -225,12 +225,12 @@ export function PostForm({ post }: PostFormProps) {
 
       <div className="space-y-6 px-6 py-6 sm:px-8">
         {error ? (
-          <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{error}</div>
+          <div className="rounded-2xl border border-red-700 bg-red-900/20 px-4 py-3 text-sm text-red-300">{error}</div>
         ) : null}
 
         <div className="grid gap-6">
           <div>
-            <label htmlFor="title" className="mb-2 block text-sm font-semibold text-gray-900">
+            <label htmlFor="title" className="mb-2 block text-sm font-semibold text-slate-100">
               Tiêu đề <span className="text-red-500">*</span>
             </label>
             <input
@@ -239,13 +239,13 @@ export function PostForm({ post }: PostFormProps) {
               value={title}
               onChange={(event) => setTitle(event.target.value)}
               required
-              className="block w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="block w-full rounded-2xl border border-slate-700 bg-slate-700/30 px-4 py-3 text-slate-100 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-900/20 placeholder:text-slate-500"
               placeholder="Nhập tiêu đề bài viết"
             />
           </div>
 
           <div>
-            <label htmlFor="excerpt" className="mb-2 block text-sm font-semibold text-gray-900">
+            <label htmlFor="excerpt" className="mb-2 block text-sm font-semibold text-slate-100">
               Tóm tắt
             </label>
             <input
@@ -253,23 +253,23 @@ export function PostForm({ post }: PostFormProps) {
               type="text"
               value={excerpt}
               onChange={(event) => setExcerpt(event.target.value)}
-              className="block w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="block w-full rounded-2xl border border-slate-700 bg-slate-700/30 px-4 py-3 text-slate-100 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-900/20 placeholder:text-slate-500"
               placeholder="Mô tả ngắn hiển thị trên danh sách bài viết"
             />
           </div>
 
           <div>
-            <label htmlFor="featured-image" className="mb-2 block text-sm font-semibold text-gray-900">
+            <label htmlFor="featured-image" className="mb-2 block text-sm font-semibold text-slate-100">
               Ảnh bìa
             </label>
             <div className="flex flex-col gap-3">
               {featuredImageUrl && (
-                <div className="relative overflow-hidden rounded-2xl border border-gray-300">
+                <div className="relative overflow-hidden rounded-2xl border border-slate-700">
                   <img src={featuredImageUrl} alt="Featured" className="h-48 w-full object-cover" />
                   <button
                     type="button"
                     onClick={() => setFeaturedImageUrl('')}
-                    className="absolute right-2 top-2 rounded-full bg-red-500 p-1 text-white hover:bg-red-600"
+                    className="absolute right-2 top-2 rounded-full bg-red-600 p-1 text-white hover:bg-red-700"
                   >
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -283,14 +283,14 @@ export function PostForm({ post }: PostFormProps) {
                 accept="image/*"
                 onChange={handleFeaturedImageUpload}
                 disabled={uploadingFeaturedImage}
-                className="block w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 file:mr-4 file:rounded-lg file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-blue-600 file:font-semibold hover:file:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-50"
+                className="block w-full rounded-2xl border border-slate-700 bg-slate-700/30 px-4 py-3 text-sm text-slate-100 file:mr-4 file:rounded-lg file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-white file:font-semibold hover:file:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               />
-              <p className="text-xs text-gray-500">Ảnh bìa sẽ hiển thị trên hero section và danh sách bài viết</p>
+              <p className="text-xs text-slate-400">Ảnh bìa sẽ hiển thị trên hero section và danh sách bài viết</p>
             </div>
           </div>
 
           <div>
-            <label htmlFor="content" className="mb-2 block text-sm font-semibold text-gray-900">
+            <label htmlFor="content" className="mb-2 block text-sm font-semibold text-slate-100">
               Nội dung
             </label>
             <div className="mb-3 flex flex-wrap items-center gap-3">
@@ -298,11 +298,11 @@ export function PostForm({ post }: PostFormProps) {
                 type="button"
                 onClick={() => imageInputRef.current?.click()}
                 disabled={uploadingImage}
-                className="inline-flex items-center rounded-2xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-sm transition hover:border-gray-400 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex items-center rounded-2xl border border-slate-700 bg-slate-700/30 px-4 py-2 text-sm font-medium text-slate-100 shadow-sm transition hover:border-slate-600 hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {uploadingImage ? 'Đang upload...' : 'Upload ảnh'}
               </button>
-              <span className="text-sm text-gray-500">Ảnh sẽ được chèn vào nội dung dưới dạng Markdown</span>
+              <span className="text-sm text-slate-400">Ảnh sẽ được chèn vào nội dung dưới dạng Markdown</span>
             </div>
             <input
               ref={imageInputRef}
@@ -317,21 +317,21 @@ export function PostForm({ post }: PostFormProps) {
               ref={contentRef}
               onChange={(event) => setContent(event.target.value)}
               rows={16}
-              className="block w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 font-mono text-gray-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="block w-full rounded-2xl border border-slate-700 bg-slate-700/30 px-4 py-3 font-mono text-slate-100 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-900/20"
               placeholder="Viết nội dung bài viết của bạn..."
             />
-            <p className="mt-2 text-xs text-gray-500">Hỗ trợ Markdown</p>
+            <p className="mt-2 text-xs text-slate-400">Hỗ trợ Markdown</p>
           </div>
 
           <div>
-            <label htmlFor="status" className="mb-2 block text-sm font-semibold text-gray-900">
+            <label htmlFor="status" className="mb-2 block text-sm font-semibold text-slate-100">
               Trạng thái
             </label>
             <select
               id="status"
               value={status}
               onChange={(event) => setStatus(event.target.value as PostStatus)}
-              className="block w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="block w-full rounded-2xl border border-slate-700 bg-slate-700/30 px-4 py-3 text-slate-100 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-900/20"
             >
               <option value="draft">Bản nháp</option>
               <option value="published">Xuất bản</option>
@@ -343,7 +343,7 @@ export function PostForm({ post }: PostFormProps) {
           <button
             type="button"
             onClick={() => router.back()}
-            className="inline-flex items-center justify-center rounded-2xl border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+            className="inline-flex items-center justify-center rounded-2xl border border-slate-700 bg-slate-700/30 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-700"
           >
             Hủy
           </button>
