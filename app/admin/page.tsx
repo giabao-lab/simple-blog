@@ -82,42 +82,42 @@ export default async function AdminPage({ searchParams }: { searchParams?: { q?:
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 py-10 text-slate-900">
+    <main className="min-h-screen bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 py-10 text-slate-100">
       <div className="mx-auto max-w-5xl px-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-950">Admin Dashboard</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-100">Admin Dashboard</h1>
           <form method="get" className="flex items-center gap-2">
-            <input name="q" defaultValue={q} placeholder="Tìm kiếm..." className="rounded-md border border-slate-200 px-3 py-2 text-sm" />
-            <select name="role" defaultValue={roleFilter} className="rounded-md border border-slate-200 px-2 py-2 text-sm">
+            <input name="q" defaultValue={q} placeholder="Tìm kiếm..." className="rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500" />
+            <select name="role" defaultValue={roleFilter} className="rounded-md border border-slate-700 bg-slate-800 px-2 py-2 text-sm text-slate-100">
               <option value="">All roles</option>
               <option value="user">User</option>
               <option value="admin">Admin</option>
             </select>
-            <select name="banned" defaultValue={bannedFilter} className="rounded-md border border-slate-200 px-2 py-2 text-sm">
+            <select name="banned" defaultValue={bannedFilter} className="rounded-md border border-slate-700 bg-slate-800 px-2 py-2 text-sm text-slate-100">
               <option value="">Any</option>
               <option value="false">Not banned</option>
               <option value="true">Banned</option>
             </select>
-            <select name="perPage" defaultValue={String(perPage)} className="rounded-md border border-slate-200 px-2 py-2 text-sm">
+            <select name="perPage" defaultValue={String(perPage)} className="rounded-md border border-slate-700 bg-slate-800 px-2 py-2 text-sm text-slate-100">
               <option value="5">5</option>
               <option value="10">10</option>
               <option value="20">20</option>
             </select>
-            <button type="submit" className="rounded-md bg-slate-900 text-white px-3 py-2 text-sm">Apply</button>
+            <button type="submit" className="rounded-md bg-blue-600 text-white px-3 py-2 text-sm hover:bg-blue-700">Apply</button>
           </form>
         </div>
 
-        <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/60">
-          <h2 className="text-xl font-semibold text-slate-950">Quản lý người dùng</h2>
-          <div className="mt-4 divide-y divide-slate-200">
+        <section className="mt-8 rounded-2xl border border-slate-700 bg-slate-800 p-6 shadow-xl shadow-slate-900/60">
+          <h2 className="text-xl font-semibold text-slate-100">Quản lý người dùng</h2>
+          <div className="mt-4 divide-y divide-slate-700">
             {profiles?.map((profile: AdminProfileRow) => (
               <UserRow key={profile.id} user={profile} />
             ))}
           </div>
         </section>
 
-        <section className="mt-8 rounded-2xl bg-white p-6 shadow">
-          <h2 className="text-xl font-semibold mb-4">Quản lý bài viết</h2>
+        <section className="mt-8 rounded-2xl border border-slate-700 bg-slate-800 p-6 shadow-xl shadow-slate-900/60">
+          <h2 className="text-xl font-semibold text-slate-100 mb-4">Quản lý bài viết</h2>
 
           <form method="get" className="mb-4 flex flex-col sm:flex-row sm:items-center sm:gap-3">
             {/* preserve profile filters as hidden fields */}
@@ -129,12 +129,12 @@ export default async function AdminPage({ searchParams }: { searchParams?: { q?:
               name="posts_q"
               defaultValue={postsQ}
               placeholder="Tìm tiêu đề hoặc slug..."
-              className="w-full sm:w-64 rounded-md border border-slate-200 px-3 py-2 text-sm"
+              className="w-full sm:w-64 rounded-md border border-slate-700 bg-slate-700 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500"
             />
             <select
               name="posts_status"
               defaultValue={postsStatus}
-              className="w-full sm:w-40 mt-2 sm:mt-0 rounded-md border border-slate-200 px-2 py-2 text-sm"
+              className="w-full sm:w-40 mt-2 sm:mt-0 rounded-md border border-slate-700 bg-slate-700 px-2 py-2 text-sm text-slate-100"
             >
               <option value="">Any status</option>
               <option value="published">Published</option>
@@ -143,52 +143,52 @@ export default async function AdminPage({ searchParams }: { searchParams?: { q?:
             <select
               name="posts_perPage"
               defaultValue={String(postsPerPage)}
-              className="w-full sm:w-24 mt-2 sm:mt-0 rounded-md border border-slate-200 px-2 py-2 text-sm"
+              className="w-full sm:w-24 mt-2 sm:mt-0 rounded-md border border-slate-700 bg-slate-700 px-2 py-2 text-sm text-slate-100"
             >
               <option value="5">5</option>
               <option value="10">10</option>
               <option value="20">20</option>
             </select>
             <div className="mt-2 sm:mt-0">
-              <button type="submit" className="rounded-md bg-slate-900 text-white px-4 py-2 text-sm">Tìm</button>
+              <button type="submit" className="rounded-md bg-blue-600 text-white px-4 py-2 text-sm hover:bg-blue-700">Tìm</button>
             </div>
           </form>
 
-          <div className="mt-2 divide-y">
+          <div className="mt-2 divide-y divide-slate-700">
             {posts?.length ? (
               posts.map((post: AdminPostRow) => (
                 <PostRow key={post.id} post={post} />
               ))
             ) : (
-              <div className="py-4 text-sm text-slate-600">Không tìm thấy bài viết nào</div>
+              <div className="py-4 text-sm text-slate-400">Không tìm thấy bài viết nào</div>
             )}
           </div>
 
           <div className="mt-4 flex items-center justify-between">
-            <div className="text-sm text-slate-600">{postsCount} bài viết</div>
+            <div className="text-sm text-slate-400">{postsCount} bài viết</div>
             <div className="flex items-center gap-2">
-              <a href={hrefWith({ posts_page: String(Math.max(1, postsPageNum - 1)) })} className="rounded-md border px-3 py-1 text-sm">Prev</a>
-              <div className="text-sm">{postsPageNum} / {Math.max(1, Math.ceil(postsCount / postsPerPage))}</div>
-              <a href={hrefWith({ posts_page: String(Math.min(Math.max(1, Math.ceil(postsCount / postsPerPage)), postsPageNum + 1)) })} className="rounded-md border px-3 py-1 text-sm">Next</a>
+              <a href={hrefWith({ posts_page: String(Math.max(1, postsPageNum - 1)) })} className="rounded-md border border-slate-700 px-3 py-1 text-sm text-slate-300 hover:bg-slate-700">Prev</a>
+              <div className="text-sm text-slate-300">{postsPageNum} / {Math.max(1, Math.ceil(postsCount / postsPerPage))}</div>
+              <a href={hrefWith({ posts_page: String(Math.min(Math.max(1, Math.ceil(postsCount / postsPerPage)), postsPageNum + 1)) })} className="rounded-md border border-slate-700 px-3 py-1 text-sm text-slate-300 hover:bg-slate-700">Next</a>
             </div>
           </div>
         </section>
 
-        <section className="mt-8 rounded-2xl bg-white p-6 shadow">
-          <h2 className="text-xl font-semibold">Lịch sử đăng nhập</h2>
-          <div className="mt-4 divide-y">
+        <section className="mt-8 rounded-2xl border border-slate-700 bg-slate-800 p-6 shadow-xl shadow-slate-900/60">
+          <h2 className="text-xl font-semibold text-slate-100">Lịch sử đăng nhập</h2>
+          <div className="mt-4 divide-y divide-slate-700">
             {loginHistory?.length ? (
               loginHistory.map((row: any) => (
                 <div key={row.id} className="flex items-center justify-between gap-4 py-2">
                   <div>
-                    <div className="font-semibold">{row.event_type} — {row.user_id}</div>
-                    <div className="text-sm text-gray-500">{new Date(row.created_at).toLocaleString()}</div>
+                    <div className="font-semibold text-slate-100">{row.event_type} — {row.user_id}</div>
+                    <div className="text-sm text-slate-400">{new Date(row.created_at).toLocaleString()}</div>
                   </div>
-                  <div className="text-sm text-gray-600 truncate max-w-xs">{row.user_agent || '—'}</div>
+                  <div className="text-sm text-slate-300 truncate max-w-xs">{row.user_agent || '—'}</div>
                 </div>
               ))
             ) : (
-              <div className="text-sm text-slate-600">Chưa có bản ghi đăng nhập</div>
+              <div className="text-sm text-slate-400">Chưa có bản ghi đăng nhập</div>
             )}
           </div>
         </section>

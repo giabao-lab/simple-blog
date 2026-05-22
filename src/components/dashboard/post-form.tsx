@@ -123,7 +123,7 @@ export function PostForm({ post }: PostFormProps) {
       }
 
       const fileExtension = file.name.split('.').pop() || 'png'
-      const filePath = `featured/${user.id}/${crypto.randomUUID()}.${fileExtension}`
+      const filePath = `${user.id}/${crypto.randomUUID()}.${fileExtension}`
 
       const { error: uploadError } = await supabase.storage.from('post-images').upload(filePath, file, {
         cacheControl: '3600',
