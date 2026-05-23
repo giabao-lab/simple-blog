@@ -1,5 +1,5 @@
 # Multi-stage build for Next.js application
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 
 # Install dependencies
 FROM base AS deps
@@ -8,7 +8,7 @@ COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm install --frozen-lockfile; \
-  else npm ci; \
+  else npm ci --legacy-peer-deps || npm install; \
   fi
 
 # Build application
@@ -16,6 +16,17 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Build-time args for Supabase - required for SSG/prerendering
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+# Export as env so Next.js can read them during build
+ENV NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+
+# Create a minimal .env.production so build-time code reading files can find keys
+RUN printf "NEXT_PUBLIC_SUPABASE_URL=%s\nNEXT_PUBLIC_SUPABASE_ANON_KEY=%s\n" "${NEXT_PUBLIC_SUPABASE_URL}" "${NEXT_PUBLIC_SUPABASE_ANON_KEY}" > .env.production || true
 
 # Build Next.js
 RUN npm run build || yarn build || pnpm build

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { Post } from '@/types/database'
 
-const PAGE_SIZE = 3
+const PAGE_SIZE = 6
 
 interface HomePageProps {
   searchParams: Promise<{ page?: string; q?: string; author_id?: string; author_name?: string; sort?: string }>
@@ -76,6 +76,27 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   // For now, we'll always use published_at, and update once view is deployed
   postsQuery = postsQuery.order('published_at', { ascending: false })
 
+  // Lấy bài viết featured riêng (bài mới nhất khi không có filter) - chỉ trên homepage
+  let featuredPost: Post | null = null
+  if (!searchQuery && !authorName && !authorFilter) {
+    const { data: featuredData } = await supabase
+      .from('posts')
+      .select(
+        `
+        *,
+        profiles (
+        display_name,
+        avatar_url
+        )
+        `
+      )
+      .eq('status', 'published')
+      .order('published_at', { ascending: false })
+      .limit(1)
+    
+    featuredPost = featuredData?.[0] || null
+  }
+
   // Lấy bài viết đã publish theo trang, kèm thông tin author
   const { data: posts, error } = await postsQuery.range(from, to)
 
@@ -86,7 +107,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   return (
     <main className="min-h-screen bg-linear-to-b from-slate-950 via-slate-900 to-slate-950">
       {/* Hero Section - Featured Post */}
-      {posts && posts.length > 0 && (
+      {featuredPost && (
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
           {/* Background image with overlay */}
           <div className="absolute inset-0">
@@ -106,30 +127,30 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
               {/* Title */}
               <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                {posts[0].title}
+                {featuredPost.title}
               </h1>
 
               {/* Excerpt */}
-              {posts[0].excerpt && (
+              {featuredPost.excerpt && (
                 <p className="text-lg text-slate-300 mb-8 leading-relaxed line-clamp-3">
-                  {posts[0].excerpt}
+                  {featuredPost.excerpt}
                 </p>
               )}
 
               {/* Author Info */}
               <div className="flex items-center gap-4 mb-8">
-                {posts[0].profiles?.avatar_url && (
+                {featuredPost.profiles?.avatar_url && (
                   <img
-                    src={posts[0].profiles.avatar_url}
-                    alt={posts[0].profiles.display_name || 'Author'}
+                    src={featuredPost.profiles.avatar_url}
+                    alt={featuredPost.profiles.display_name || 'Author'}
                     className="w-12 h-12 rounded-full object-cover border-2 border-slate-700"
                   />
                 )}
                 <div>
-                  <p className="font-semibold text-white">{posts[0].profiles?.display_name || 'Ẩn danh'}</p>
+                  <p className="font-semibold text-white">{featuredPost.profiles?.display_name || 'Ẩn danh'}</p>
                   <p className="text-sm text-slate-400">
-                    {posts[0].published_at
-                      ? new Date(posts[0].published_at).toLocaleDateString('vi-VN')
+                    {featuredPost.published_at
+                      ? new Date(featuredPost.published_at).toLocaleDateString('vi-VN')
                       : 'Chưa xuất bản'}
                   </p>
                 </div>
@@ -137,7 +158,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
               {/* CTA Button */}
               <Link
-                href={`/posts/${posts[0].slug}`}
+                href={`/posts/${featuredPost.slug}`}
                 className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
               >
                 Đọc bài viết
@@ -150,8 +171,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             {/* Hero Image */}
             <div className="hidden lg:flex flex-1 h-96 rounded-xl overflow-hidden shadow-2xl">
               <img
-                src={posts[0].featured_image_url || 'https://images.unsplash.com/photo-1516321318423-f06f70259b51?w=800&h=600&fit=crop'}
-                alt={posts[0].title}
+                src={featuredPost.featured_image_url || 'https://images.unsplash.com/photo-1516321318423-f06f70259b51?w=800&h=600&fit=crop'}
+                alt={featuredPost.title}
                 className="w-full h-full object-cover"
               />
             </div>
