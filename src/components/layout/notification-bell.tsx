@@ -48,55 +48,78 @@ export function NotificationBell() {
 
   const fetchNotifications = async () => {
     try {
-      const { data } = await supabase
+      const { data: { user } } = await supabase.auth.getUser()
+      
+      if (!user) {
+        setNotifications([])
+        return
+      }
+
+      const { data: notificationsData, error: notificationsError } = await supabase
         .from('notifications')
-        .select(
-          `
-          id,
-          type,
-          post_id,
-          trigger_user_id,
-          is_read,
-          created_at,
-          profiles!notifications_trigger_user_id_fkey (display_name)
-          `
-        )
+        .select('*')
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(10)
 
-      if (data) {
-        setNotifications(
-          data.map((n: any) => ({
-            ...n,
-            trigger_user: n.profiles,
-          }))
-        )
+      if (notificationsError) {
+        if (notificationsError.code !== '42P01') {
+          console.error('Lỗi fetch notifications:', notificationsError)
+        }
+        setNotifications([])
+        return
       }
+
+      setNotifications((notificationsData || []).map((notification: any) => ({
+        ...notification,
+        trigger_user: notification.trigger_user || null,
+      })))
     } catch (error) {
-      console.error('Failed to fetch notifications:', error)
+      console.error('Lỗi khi lấy thông báo:', error)
     }
   }
 
   const markAsRead = async (notificationId: string) => {
     try {
-      await supabase.from('notifications').update({ is_read: true }).eq('id', notificationId)
+      const { error } = await supabase.from('notifications').update({ is_read: true }).eq('id', notificationId)
+
+      if (error) {
+        console.error('Lỗi khi đánh dấu đã đọc:', error)
+        return
+      }
 
       setNotifications((prev) =>
         prev.map((n) => (n.id === notificationId ? { ...n, is_read: true } : n))
       )
     } catch (error) {
-      console.error('Failed to mark notification as read:', error)
+      console.error('Lỗi khi đánh dấu thông báo:', error)
     }
   }
 
   const markAllAsRead = async () => {
     setLoading(true)
     try {
-      await supabase.from('notifications').update({ is_read: true }).eq('is_read', false)
+      const { data: { user } } = await supabase.auth.getUser()
+      
+      if (!user) {
+        setLoading(false)
+        return
+      }
+
+      const { error } = await supabase
+        .from('notifications')
+        .update({ is_read: true })
+        .eq('user_id', user.id)
+        .eq('is_read', false)
+
+      if (error) {
+        console.error('Lỗi khi đánh dấu tất cả:', error)
+        return
+      }
 
       setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })))
     } catch (error) {
-      console.error('Failed to mark all as read:', error)
+      console.error('Lỗi khi cập nhật thông báo:', error)
     } finally {
       setLoading(false)
     }

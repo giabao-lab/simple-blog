@@ -1,0 +1,46 @@
+# Git
+.git
+.gitignore
+
+# Node
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+.next
+out
+dist
+build
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Testing
+.nyc_output
+coverage
+.jest_cache
+
+# Misc
+README.md
+CHANGELOG.md
+.npm
+.eslintcache
+.turbo
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore

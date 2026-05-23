@@ -39,7 +39,9 @@ export function LikeButton({ postId, initialLikeCount, initialIsLiked }: LikeBut
         setIsLiked(false)
         setLikeCount((current) => Math.max(0, current - 1))
       } else {
-        const { error } = await supabase.from('likes').insert({ post_id: postId, user_id: user.id })
+        const { error } = await supabase
+          .from('likes')
+          .upsert({ post_id: postId, user_id: user.id }, { onConflict: 'post_id,user_id' })
         if (error) throw error
         setIsLiked(true)
         setLikeCount((current) => current + 1)
@@ -47,7 +49,11 @@ export function LikeButton({ postId, initialLikeCount, initialIsLiked }: LikeBut
 
       router.refresh()
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Có lỗi xảy ra')
+      if (err && typeof err === 'object' && 'message' in err) {
+        setError((err as { message?: string }).message || 'Có lỗi xảy ra')
+      } else {
+        setError('Có lỗi xảy ra')
+      }
     } finally {
       setLoading(false)
     }
