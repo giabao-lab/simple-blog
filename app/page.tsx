@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/server'
 import { Post } from '@/types/database'
 
@@ -30,7 +31,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   }
 
   // Build count query with filters
-  let countQuery: any = supabase
+  let countQuery = supabase
     .from('posts')
     .select('*', { count: 'exact', head: true })
     .eq('status', 'published')
@@ -51,7 +52,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const to = from + PAGE_SIZE - 1
 
   // Build posts query with filters
-  let postsQuery: any = supabase
+  let postsQuery = supabase
     .from('posts')
     .select(
       `
@@ -161,10 +162,12 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               {/* Author Info */}
               <div className="flex items-center gap-4 mb-8">
                 {featuredPost.profiles?.avatar_url && (
-                  <img
+                  <Image
                     src={featuredPost.profiles.avatar_url}
                     alt={featuredPost.profiles.display_name || 'Author'}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-slate-700"
+                    width={48}
+                    height={48}
+                    className="rounded-full object-cover border-2 border-slate-700"
                   />
                 )}
                 <div>
@@ -191,9 +194,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
             {/* Hero Image */}
             <div className="hidden lg:flex flex-1 h-96 rounded-xl overflow-hidden shadow-2xl">
-              <img
+              <Image
                 src={featuredPost.featured_image_url || 'https://images.unsplash.com/photo-1516321318423-f06f70259b51?w=800&h=600&fit=crop'}
                 alt={featuredPost.title}
+                width={600}
+                height={400}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -244,12 +249,12 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 Tìm kiếm
               </button>
               {(searchQuery || authorName || authorFilter) && (
-                <a
+                <Link
                   href="/"
                   className="rounded-lg border border-slate-700 px-6 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800 transition-colors"
                 >
                   Xóa bộ lọc
-                </a>
+                </Link>
               )}
             </div>
           </form>
@@ -280,7 +285,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                       {/* Post Image */}
                       <div className="aspect-video bg-linear-to-br from-slate-700 to-slate-900 flex items-center justify-center overflow-hidden">
                         {post.featured_image_url ? (
-                          <img src={post.featured_image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                          <Image src={post.featured_image_url} alt={post.title} width={400} height={300} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                         ) : (
                           <div className="text-4xl group-hover:scale-110 transition-transform">🎨</div>
                         )}
@@ -325,7 +330,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                       {/* Post Image */}
                       <div className="aspect-video bg-linear-to-br from-slate-700 to-slate-900 flex items-center justify-center overflow-hidden">
                         {post.featured_image_url ? (
-                          <img src={post.featured_image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                          <Image src={post.featured_image_url} alt={post.title} width={400} height={300} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                         ) : (
                           <div className="text-4xl group-hover:scale-110 transition-transform">🎨</div>
                         )}
@@ -445,9 +450,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               <p className="mt-1 text-sm text-slate-400">Hãy quay lại sau nhé!</p>
               {(searchQuery || authorName || authorFilter) && (
                 <div className="mt-4">
-                  <a href="/" className="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                  <Link href="/" className="text-blue-400 hover:text-blue-300 text-sm font-medium">
                     Xóa bộ lọc và xem tất cả
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>
