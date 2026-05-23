@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { FeaturedToggle } from './featured-toggle'
 
 export default function PostRow({ post }: { post: any }) {
   const [loading, setLoading] = useState(false)
@@ -24,6 +25,7 @@ export default function PostRow({ post }: { post: any }) {
         <div className="text-sm text-slate-400">{post.slug} • {post.status}</div>
       </div>
       <div className="flex items-center gap-2">
+        <FeaturedToggle postId={post.id} isFeatured={post.is_featured || false} />
         <button onClick={deletePost} disabled={loading} className="rounded-md bg-red-600 px-3 py-1 text-white hover:bg-red-700 disabled:opacity-50">
           Delete
         </button>

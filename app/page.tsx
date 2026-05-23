@@ -76,10 +76,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   // For now, we'll always use published_at, and update once view is deployed
   postsQuery = postsQuery.order('published_at', { ascending: false })
 
-  // Lấy bài viết featured riêng (bài mới nhất khi không có filter) - chỉ trên homepage
+  // Lấy bài viết featured (do admin chọn, hoặc fallback to latest)
   let featuredPost: Post | null = null
   if (!searchQuery && !authorName && !authorFilter) {
-    const { data: featuredData } = await supabase
+    // Cố gắng lấy bài được đánh dấu is_featured = true
+    const { data: featuredByFlag } = await supabase
       .from('posts')
       .select(
         `
@@ -91,10 +92,30 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         `
       )
       .eq('status', 'published')
-      .order('published_at', { ascending: false })
+      .eq('is_featured', true)
       .limit(1)
     
-    featuredPost = featuredData?.[0] || null
+    if (featuredByFlag && featuredByFlag.length > 0) {
+      featuredPost = featuredByFlag[0]
+    } else {
+      // Fallback: lấy bài mới nhất
+      const { data: latestPost } = await supabase
+        .from('posts')
+        .select(
+          `
+          *,
+          profiles (
+          display_name,
+          avatar_url
+          )
+          `
+        )
+        .eq('status', 'published')
+        .order('published_at', { ascending: false })
+        .limit(1)
+      
+      featuredPost = latestPost?.[0] || null
+    }
   }
 
   // Lấy bài viết đã publish theo trang, kèm thông tin author

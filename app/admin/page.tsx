@@ -15,6 +15,7 @@ type AdminPostRow = {
   slug: string
   status: string
   author_id: string
+  is_featured?: boolean
 }
 
 export default async function AdminPage({ searchParams }: { searchParams?: { q?: string; role?: string; banned?: string; page?: string; perPage?: string; posts_q?: string; posts_status?: string; posts_page?: string; posts_perPage?: string } }) {
@@ -44,7 +45,7 @@ export default async function AdminPage({ searchParams }: { searchParams?: { q?:
   if (bannedFilter === 'false') profilesQuery = profilesQuery.eq('is_banned', false)
 
   // Build posts query (server-side search + pagination)
-  let postsQuery: any = supabase.from('posts').select('id, title, slug, status, author_id', { count: 'exact' }).order('created_at', { ascending: false })
+  let postsQuery: any = supabase.from('posts').select('id, title, slug, status, author_id, is_featured', { count: 'exact' }).order('created_at', { ascending: false })
   if (q) postsQuery = postsQuery.or(`title.ilike.%${q}%,slug.ilike.%${q}%`)
 
   const profilesRes = await profilesQuery.range(start, end)
