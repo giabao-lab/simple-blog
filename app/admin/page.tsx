@@ -57,12 +57,6 @@ export default async function AdminPage({ searchParams }: { searchParams?: { q?:
   const postsCount = Number(postsRes.count ?? 0)
   const profilesTotalPages = Math.max(1, Math.ceil(profilesCount / perPage))
   const postsTotalPages = Math.max(1, Math.ceil(postsCount / perPage))
-  // Fetch recent login history
-  const { data: loginHistory } = await supabase
-    .from('user_login_history')
-    .select('id, user_id, event_type, user_agent, metadata, created_at')
-    .order('created_at', { ascending: false })
-    .limit(20)
 
   // helper to build href preserving other params
   function hrefWith(overrides: Record<string, string | undefined>) {
@@ -175,24 +169,6 @@ export default async function AdminPage({ searchParams }: { searchParams?: { q?:
           </div>
         </section>
 
-        <section className="mt-8 rounded-2xl border border-slate-700 bg-slate-800 p-6 shadow-xl shadow-slate-900/60">
-          <h2 className="text-xl font-semibold text-slate-100">Lịch sử đăng nhập</h2>
-          <div className="mt-4 divide-y divide-slate-700">
-            {loginHistory?.length ? (
-              loginHistory.map((row: any) => (
-                <div key={row.id} className="flex items-center justify-between gap-4 py-2">
-                  <div>
-                    <div className="font-semibold text-slate-100">{row.event_type} — {row.user_id}</div>
-                    <div className="text-sm text-slate-400">{new Date(row.created_at).toLocaleString()}</div>
-                  </div>
-                  <div className="text-sm text-slate-300 truncate max-w-xs">{row.user_agent || '—'}</div>
-                </div>
-              ))
-            ) : (
-              <div className="text-sm text-slate-400">Chưa có bản ghi đăng nhập</div>
-            )}
-          </div>
-        </section>
       </div>
     </main>
   )

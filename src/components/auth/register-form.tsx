@@ -53,16 +53,7 @@ export function RegisterForm() {
           }
         }
 
-          // Log registration event (server will read user-agent)
-          try {
-            await fetch('/api/auth/log-login', { method: 'POST', body: JSON.stringify({ event: 'register' }) })
-          } catch (e) {
-            // ignore logging errors
-          }
-
-          router.push(
-            '/login?message=Đăng ký thành công! Vui lòng kiểm tra email để xác nhận.'
-          )
+          router.push('/login?message=Đăng ký thành công! Vui lòng kiểm tra email để xác nhận.')
       }
     } catch {
       setError('Có lỗi xảy ra. Vui lòng thử lại.')

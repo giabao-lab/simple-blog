@@ -45,13 +45,6 @@ export function LoginForm() {
           return
         }
 
-        // Log login event (server will read user-agent)
-        try {
-          await fetch('/api/auth/log-login', { method: 'POST' })
-        } catch (e) {
-          // ignore logging errors
-        }
-
         router.push('/dashboard')
         router.refresh()
       }
