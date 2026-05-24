@@ -18,19 +18,20 @@ type AdminPostRow = {
   is_featured?: boolean
 }
 
-export default async function AdminPage({ searchParams }: { searchParams?: { q?: string; role?: string; banned?: string; page?: string; perPage?: string; posts_q?: string; posts_status?: string; posts_page?: string; posts_perPage?: string } }) {
+export default async function AdminPage({ searchParams }: { searchParams?: Promise<{ q?: string; role?: string; banned?: string; page?: string; perPage?: string; posts_q?: string; posts_status?: string; posts_page?: string; posts_perPage?: string }> }) {
   const supabase = await createClient()
-  const q = (searchParams?.q || '').trim()
-  const roleFilter = searchParams?.role || ''
-  const bannedFilter = searchParams?.banned || '' // 'true' | 'false' | ''
-  const pageNum = Math.max(1, Number(searchParams?.page || '1'))
-  const perPage = Math.max(5, Number(searchParams?.perPage || '10'))
+  const resolvedSearchParams = searchParams ? await searchParams : {}
+  const q = (resolvedSearchParams.q || '').trim()
+  const roleFilter = resolvedSearchParams.role || ''
+  const bannedFilter = resolvedSearchParams.banned || '' // 'true' | 'false' | ''
+  const pageNum = Math.max(1, Number(resolvedSearchParams.page || '1'))
+  const perPage = Math.max(5, Number(resolvedSearchParams.perPage || '10'))
 
   // posts-specific params
-  const postsQ = (searchParams?.posts_q || '').trim()
-  const postsStatus = searchParams?.posts_status || ''
-  const postsPageNum = Math.max(1, Number(searchParams?.posts_page || '1'))
-  const postsPerPage = Math.max(5, Number(searchParams?.posts_perPage || String(perPage)))
+  const postsQ = (resolvedSearchParams.posts_q || '').trim()
+  const postsStatus = resolvedSearchParams.posts_status || ''
+  const postsPageNum = Math.max(1, Number(resolvedSearchParams.posts_page || '1'))
+  const postsPerPage = Math.max(5, Number(resolvedSearchParams.posts_perPage || String(perPage)))
 
   const start = (pageNum - 1) * perPage
   const end = pageNum * perPage - 1
@@ -61,11 +62,8 @@ export default async function AdminPage({ searchParams }: { searchParams?: { q?:
   // helper to build href preserving other params
   function hrefWith(overrides: Record<string, string | undefined>) {
     const p = new URLSearchParams()
-    if (searchParams) {
-      for (const k of Object.keys(searchParams)) {
-        const v = (searchParams as any)[k]
-        if (v != null && v !== '') p.set(k, String(v))
-      }
+    for (const [key, value] of Object.entries(resolvedSearchParams)) {
+      if (value != null && value !== '') p.set(key, String(value))
     }
     for (const k of Object.keys(overrides)) {
       const v = overrides[k]

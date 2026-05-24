@@ -193,13 +193,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             </div>
 
             {/* Hero Image */}
-            <div className="hidden lg:flex flex-1 h-96 rounded-xl overflow-hidden shadow-2xl">
+            <div className="relative hidden lg:flex flex-1 h-96 rounded-xl overflow-hidden shadow-2xl">
               <Image
                 src={featuredPost.featured_image_url || 'https://images.unsplash.com/photo-1516321318423-f06f70259b51?w=800&h=600&fit=crop'}
                 alt={featuredPost.title}
-                width={600}
-                height={400}
-                className="w-full h-full object-cover"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
               />
             </div>
           </div>
@@ -283,9 +283,15 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                       className="group rounded-xl border border-slate-800 bg-slate-800/50 backdrop-blur overflow-hidden hover:border-slate-700 transition-all hover:shadow-xl hover:shadow-blue-500/10"
                     >
                       {/* Post Image */}
-                      <div className="aspect-video bg-linear-to-br from-slate-700 to-slate-900 flex items-center justify-center overflow-hidden">
+                      <div className="relative aspect-video bg-linear-to-br from-slate-700 to-slate-900 flex items-center justify-center overflow-hidden">
                         {post.featured_image_url ? (
-                          <Image src={post.featured_image_url} alt={post.title} width={400} height={300} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                          <Image
+                            src={post.featured_image_url}
+                            alt={post.title}
+                            fill
+                            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
                         ) : (
                           <div className="text-4xl group-hover:scale-110 transition-transform">🎨</div>
                         )}
@@ -328,9 +334,15 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                       className="group rounded-xl border border-slate-800 bg-slate-800/50 backdrop-blur overflow-hidden hover:border-slate-700 transition-all hover:shadow-xl hover:shadow-blue-500/10"
                     >
                       {/* Post Image */}
-                      <div className="aspect-video bg-linear-to-br from-slate-700 to-slate-900 flex items-center justify-center overflow-hidden">
+                      <div className="relative aspect-video bg-linear-to-br from-slate-700 to-slate-900 flex items-center justify-center overflow-hidden">
                         {post.featured_image_url ? (
-                          <Image src={post.featured_image_url} alt={post.title} width={400} height={300} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                          <Image
+                            src={post.featured_image_url}
+                            alt={post.title}
+                            fill
+                            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
                         ) : (
                           <div className="text-4xl group-hover:scale-110 transition-transform">🎨</div>
                         )}
