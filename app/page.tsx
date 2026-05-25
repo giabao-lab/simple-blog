@@ -274,10 +274,10 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
           {posts && posts.length > 0 ? (
             <>
-              {/* Skip first post if we're showing it in hero */}
-              {!searchQuery && !authorName && !authorFilter && posts.length > 1 ? (
+              {/* Skip featured post if we're showing it in hero */}
+              {!searchQuery && !authorName && !authorFilter && featuredPost ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {posts.slice(1).map((post: Post) => (
+                  {posts.filter((post: Post) => post.id !== featuredPost?.id).map((post: Post) => (
                     <article
                       key={post.id}
                       className="group rounded-xl border border-slate-800 bg-slate-800/50 backdrop-blur overflow-hidden hover:border-slate-700 transition-all hover:shadow-xl hover:shadow-blue-500/10"
