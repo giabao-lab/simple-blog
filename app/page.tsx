@@ -178,47 +178,104 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           style={{ background: 'radial-gradient(circle, #06b6d4 0%, transparent 70%)', filter: 'blur(100px)' }} />
       </div>
 
-      {/* ── Intro Banner ─────────────────────────────────── */}
-      <div className="relative z-10 pt-10 pb-4 px-4">
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 rounded-2xl px-6 py-5"
-            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
-            {/* Left: Tagline */}
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-              </div>
-              <div>
-                <p className="font-bold text-sm" style={{ color: '#f1f5f9' }}>Chào mừng đến với LGBlog</p>
-                <p className="text-xs mt-0.5" style={{ color: '#64748b' }}>Nơi chia sẻ kiến thức lập trình &amp; công nghệ</p>
-              </div>
-            </div>
 
-            {/* Right: Stats pills */}
-            <div className="flex items-center gap-3 flex-wrap justify-center">
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
-                style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', color: '#a5b4fc' }}>
-                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-                </svg>
-                {totalPosts} bài viết
-              </div>
-              <Link href="/register"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all hover:-translate-y-0.5 text-white"
-                style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 4px 12px rgba(99,102,241,0.3)' }}>
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-                Viết bài ngay
-              </Link>
+      {/* ── Welcome Hero ─────────────────────────────────── */}
+      <section className="relative z-10 flex items-center justify-center overflow-hidden" style={{ minHeight: '70vh' }}>
+        {/* Decorative grid lines */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: 'linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px)',
+            backgroundSize: '60px 60px'
+          }} />
+
+        {/* Centre glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full opacity-30 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse, #6366f1 0%, transparent 70%)', filter: 'blur(60px)' }} />
+
+        <div className="relative text-center px-4 max-w-4xl mx-auto">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 mb-8">
+            <span className="flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase"
+              style={{ background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', color: '#a5b4fc' }}>
+              <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-pulse" />
+              Est. 2025 · Technology Blog
+            </span>
+          </div>
+
+          {/* Main heading */}
+          <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black tracking-tight mb-6 leading-none">
+            <span style={{
+              background: 'linear-gradient(135deg, #f1f5f9 0%, #94a3b8 40%, #6366f1 70%, #a855f7 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
+              Welcome to
+            </span>
+            <br />
+            <span style={{
+              background: 'linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #38bdf8 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
+              LGBlog
+            </span>
+          </h1>
+
+          {/* Sub-headline */}
+          <p className="text-base sm:text-lg max-w-xl mx-auto mb-10 leading-relaxed" style={{ color: '#64748b' }}>
+            A space for sharing programming knowledge, technology insights,
+            and ideas that matter.
+          </p>
+
+          {/* CTA row */}
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link href="#posts"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold text-white transition-all hover:-translate-y-1"
+              style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 0 30px rgba(99,102,241,0.4)' }}>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+              Explore Articles
+            </Link>
+            <Link href="/register"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition-all hover:-translate-y-1"
+              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#e2e8f0' }}>
+              Start Writing
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+            </Link>
+          </div>
+
+          {/* Stats row */}
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-8">
+            <div className="text-center">
+              <p className="text-3xl font-black" style={{ color: '#f1f5f9' }}>{totalPosts}</p>
+              <p className="text-xs uppercase tracking-wider mt-1" style={{ color: '#475569' }}>Articles</p>
+            </div>
+            <div className="w-px h-8" style={{ background: 'rgba(255,255,255,0.08)' }} />
+            <div className="text-center">
+              <p className="text-3xl font-black" style={{ color: '#f1f5f9' }}>100%</p>
+              <p className="text-xs uppercase tracking-wider mt-1" style={{ color: '#475569' }}>Free</p>
+            </div>
+            <div className="w-px h-8" style={{ background: 'rgba(255,255,255,0.08)' }} />
+            <div className="text-center">
+              <p className="text-3xl font-black" style={{ color: '#f1f5f9' }}>∞</p>
+              <p className="text-xs uppercase tracking-wider mt-1" style={{ color: '#475569' }}>Ideas</p>
             </div>
           </div>
         </div>
-      </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 animate-bounce">
+          <span className="text-[10px] tracking-widest uppercase" style={{ color: '#334155' }}>Scroll</span>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: '#334155' }}>
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </section>
 
       {/* Hero Section - Featured Post */}
       {featuredPost && (

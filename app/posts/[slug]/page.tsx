@@ -127,15 +127,12 @@ export default async function PostPage({ params }: PostPageProps) {
           {/* Back navigation */}
           <div className="flex items-center justify-between mb-10">
             <Link href="/"
-              className="inline-flex items-center gap-2 text-sm font-medium transition-all hover:-translate-x-1"
-              style={{ color: '#64748b' }}
-              onMouseOver={(e) => (e.currentTarget.style.color = '#a5b4fc')}
-              onMouseOut={(e) => (e.currentTarget.style.color = '#64748b')}
+              className="inline-flex items-center gap-2 text-sm font-medium transition-all hover:-translate-x-1 text-slate-500 hover:text-indigo-400"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
-              Trang chủ
+              Home
             </Link>
             <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full"
               style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', color: '#a5b4fc' }}>
