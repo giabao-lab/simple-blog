@@ -14,6 +14,9 @@ interface Notification {
   trigger_user?: {
     display_name: string | null
   }
+  post?: {
+    slug: string
+  }
 }
 
 export function NotificationBell() {
@@ -57,7 +60,8 @@ export function NotificationBell() {
 
       const { data: notificationsData, error: notificationsError } = await supabase
         .from('notifications')
-        .select('*')
+        // Using explicit join for posts to get slug. trigger_user join might not work if no direct FK to profiles.
+        .select('*, post:posts(slug)')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(10)
@@ -73,6 +77,7 @@ export function NotificationBell() {
       setNotifications((notificationsData || []).map((notification: any) => ({
         ...notification,
         trigger_user: notification.trigger_user || null,
+        post: notification.post || null,
       })))
     } catch (error) {
       console.error('Lỗi khi lấy thông báo:', error)
@@ -180,7 +185,7 @@ export function NotificationBell() {
                   }`}
                   onClick={() => markAsRead(notification.id)}
                 >
-                  <Link href={`/posts/${notification.post_id}`} className="block">
+                  <Link href={notification.post?.slug ? `/posts/${notification.post.slug}` : '#'} className="block">
                     <div className="flex items-start gap-3">
                       <div className="mt-1">
                         {notification.type === 'like' ? (

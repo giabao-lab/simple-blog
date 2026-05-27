@@ -127,7 +127,10 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-linear-to-b from-slate-950 via-slate-900 to-slate-950">
+    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black relative">
+      {/* Background Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-purple-500/20 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
       {/* Hero Section - Featured Post */}
       {featuredPost && (
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -140,9 +143,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           <div className="relative z-20 mx-auto max-w-7xl px-4 w-full flex items-center gap-12">
             <div className="flex-1 max-w-2xl">
               {/* Category Badge */}
-              <div className="inline-flex items-center gap-2 mb-6">
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-sm font-medium border border-blue-500/30">
-                  <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+              <div className="inline-flex items-center gap-2 mb-6 animate-fade-in-up">
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-blue-300 text-sm font-medium shadow-lg">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
                   Bài viết nổi bật
                 </span>
               </div>
@@ -183,7 +186,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               {/* CTA Button */}
               <Link
                 href={`/posts/${featuredPost.slug}`}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold rounded-full shadow-[0_0_40px_rgba(124,58,237,0.3)] hover:shadow-[0_0_60px_rgba(124,58,237,0.5)] transition-all duration-300 hover:-translate-y-1"
               >
                 Đọc bài viết
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,7 +196,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             </div>
 
             {/* Hero Image */}
-            <div className="relative hidden lg:flex flex-1 h-96 rounded-xl overflow-hidden shadow-2xl">
+            <div className="relative hidden lg:flex flex-1 h-96 rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform hover:scale-[1.02] transition-transform duration-500">
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent z-10 pointer-events-none"></div>
               <Image
                 src={featuredPost.featured_image_url || 'https://images.unsplash.com/photo-1516321318423-f06f70259b51?w=800&h=600&fit=crop'}
                 alt={featuredPost.title}
@@ -214,7 +218,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       )}
 
       {/* Search & Filter Section */}
-      <section className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-slate-800 py-6">
+      <section className="sticky top-[64px] z-40 bg-slate-950/60 backdrop-blur-xl border-b border-white/5 py-4 shadow-lg shadow-black/20">
         <div className="mx-auto max-w-7xl px-4">
           <form method="get" className="flex flex-col gap-4">
             <div className="flex flex-col sm:flex-row gap-3">
@@ -223,19 +227,19 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 type="text"
                 defaultValue={searchQuery}
                 placeholder="Tìm kiếm tiêu đề hoặc nội dung..."
-                className="flex-1 rounded-lg border border-slate-700 bg-slate-800 px-4 py-2 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md px-4 py-2.5 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all shadow-inner"
               />
               <input
                 name="author_name"
                 type="text"
                 defaultValue={authorName}
                 placeholder="Tên tác giả..."
-                className="flex-1 rounded-lg border border-slate-700 bg-slate-800 px-4 py-2 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md px-4 py-2.5 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all shadow-inner"
               />
               <select
                 name="sort"
                 defaultValue={sortBy}
-                className="flex-1 rounded-lg border border-slate-700 bg-slate-800 px-4 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all shadow-inner [&>option]:bg-slate-900"
               >
                 <option value="newest">Mới nhất</option>
                 <option value="most_liked">Nổi bật nhất</option>
@@ -244,14 +248,14 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             <div className="flex gap-3">
               <button
                 type="submit"
-                className="rounded-lg bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 text-sm font-medium transition-colors"
+                className="rounded-xl bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-8 py-2.5 text-sm font-semibold shadow-lg shadow-purple-500/20 transition-all hover:-translate-y-0.5"
               >
                 Tìm kiếm
               </button>
               {(searchQuery || authorName || authorFilter) && (
                 <Link
                   href="/"
-                  className="rounded-lg border border-slate-700 px-6 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800 transition-colors"
+                  className="rounded-xl border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/10 hover:text-white transition-all backdrop-blur-md"
                 >
                   Xóa bộ lọc
                 </Link>
@@ -280,8 +284,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                   {posts.filter((post: Post) => post.id !== featuredPost?.id).map((post: Post) => (
                     <article
                       key={post.id}
-                      className="group rounded-xl border border-slate-800 bg-slate-800/50 backdrop-blur overflow-hidden hover:border-slate-700 transition-all hover:shadow-xl hover:shadow-blue-500/10"
+                      className="group rounded-2xl border border-white/5 bg-slate-900/40 backdrop-blur-lg overflow-hidden hover:border-white/20 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-1 relative"
                     >
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                       {/* Post Image */}
                       <div className="relative aspect-video bg-linear-to-br from-slate-700 to-slate-900 flex items-center justify-center overflow-hidden">
                         {post.featured_image_url ? (

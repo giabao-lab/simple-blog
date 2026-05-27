@@ -6,8 +6,8 @@ import { Header } from '@/components/layout/header'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Simple Blog',
-  description: 'A simple blog built with Next.js and Supabase',
+  title: 'LGBlog',
+  description: 'A modern blog built with Next.js and Supabase',
 }
 
 export default function RootLayout({
