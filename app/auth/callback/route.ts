@@ -4,11 +4,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
-  
-  // Lấy origin thực tế từ header do Nginx truyền vào (để không bị redirect về 0.0.0.0:3000)
-  const forwardedHost = request.headers.get('x-forwarded-host') || request.headers.get('host')
-  const forwardedProto = request.headers.get('x-forwarded-proto') || 'http'
-  const origin = forwardedHost ? `${forwardedProto}://${forwardedHost}` : requestUrl.origin
+  const origin = requestUrl.origin
 
   if (!code) {
     // No code → redirect to login with a query param
